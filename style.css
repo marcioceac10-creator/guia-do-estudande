@@ -1,32 +1,66 @@
+/* Reset Básico */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* Variáveis e Configurações Globais (Tema Claro Padrão - Azul) */
 body {
   font-family: "Segoe UI", sans-serif;
-  /* Fundo Padrão (Light Mode) */
-  background: linear-gradient(180deg, #e8f0ff, #ffffff); 
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 80px;
-  transition: background 0.4s; /* Transição suave para o modo escuro */
+  transition: background 0.4s, color 0.4s;
 }
 
+body[data-theme="light"] {
+    --color-primary: #007bff; /* Azul */
+    --color-primary-dark: #0056b3;
+    --color-secundary: #6c757d; /* Cinza */
+    --color-background-main: #e8f0ff; /* Fundo principal claro */
+    --color-background-darker: #f0f0f0; /* Fundo para seções destacadas no modo claro */
+    --color-text-main: #343a40;
+    --color-text-secondary: #000;
+    --color-success: #28a745;
+    --color-alert: #ffc107;
+    --color-card-bg: #ffffff;
+    --color-app-bg: #0059b3; /* Fundo do container principal */
+    
+    background: linear-gradient(180deg, var(--color-background-main), #ffffff);
+    color: var(--color-text-main);
+}
+
+/* Variáveis e Configurações Globais (Tema Escuro - Amarelo/Dourado) */
+body[data-theme="dark"] {
+    --color-primary: #FFD700; /* Amarelo Dourado (Novo!) */
+    --color-primary-dark: #ccad00; /* Dourado mais escuro (Novo!) */
+    --color-secundary: #adb5bd; /* Cinza Claro */
+    --color-background-main: #121212;
+    --color-background-darker: #2d2d2d; /* Fundo para seções destacadas no modo escuro */
+    --color-text-main: #e8e8e8;
+    --color-text-secondary: #fff;
+    --color-success: #4CAF50;
+    --color-alert: #ffeb3b;
+    --color-card-bg: #1e1e1e;
+    --color-app-bg: #000; /* Fundo do container principal */
+    
+    background: var(--color-background-main);
+    color: var(--color-text-main);
+}
+
+/* Cabeçalho Fixo */
 .top-bar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #004080;
+  background-color: var(--color-primary-dark);
   color: #fff;
   display: flex;
   align-items: center;
-  /* Adicionado para espaçar o logo/título do novo botão de toggle */
-  justify-content: space-between; 
   padding: 12px 25px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 10;
@@ -40,260 +74,197 @@ body {
 .top-bar h1 {
   font-size: 22px;
   font-weight: 600;
-  /* Centraliza o título */
-  margin: 0 auto;
+  margin: 0;
 }
 
-/* Botão de Alternância de Tema */
-#theme-toggle {
-    background: none;
-    border: 1px solid white;
-    color: white;
-    font-size: 24px;
-    padding: 5px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    line-height: 1;
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 5px;
+  transition: transform 0.3s;
 }
 
-#theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
 }
 
+/* Container Principal do Aplicativo */
 .app {
   width: 90%;
   max-width: 400px;
-  background: #0059b3;
+  background: var(--color-app-bg);
   border-radius: 20px;
   padding: 25px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  transition: 0.4s;
+  color: var(--color-text-secondary);
+  transition: background 0.4s, color 0.4s;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 25px;
-  font-size: 22px;
-  color: #fff;
-}
-
-h2 {
-  font-size: 18px;
-  margin-bottom: 5px;
-  color: #ffcc00;
-}
-
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-.campo {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 15px;
-  font-size: 15px;
-  background-color: #fff;
-  color: #000;
-}
-
-.btn {
-  width: 100%;
-  padding: 14px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #ffcc00, #ffd633);
-  color: #000;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn:hover {
-  background: linear-gradient(90deg, #ffd633, #ffdb5c);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.btn.voltar {
-  background: #337ab7;
-  color: #fff;
-  margin-top: 30px;
-}
-
-.btn.voltar:hover {
-  background: #2a6496;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.btn.sair {
-  background: #d9534f;
-  color: #fff;
-  margin-top: 30px;
-}
-
-.btn.sair:hover {
-  background: #c9302c;
-}
-
-.btn.menu-btn {
-  background: #33a5d9;
-  font-size: 16px;
-  margin-bottom: 15px;
-}
-
-.btn.menu-btn:hover {
-  background: #278cc0;
-}
-
+/* Telas (Visualização) */
 .tela {
   display: none;
-  width: 100%;
-  min-height: 300px;
 }
 
 .tela.ativo {
   display: block;
 }
 
-/* Estilos da tela inicial */
-#tela-inicial p {
+h1 {
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 16px;
+  margin-bottom: 25px;
+  font-size: 24px;
+  color: var(--color-text-secondary); /* Usa cor do container principal */
 }
 
-.menu-principal {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
+h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: var(--color-primary);
 }
 
-/* Estilos das telas de conteúdo */
-#tela-disciplinas ul,
-#tela-anexos ul,
-#tela-professores ul {
-  list-style: none;
-  padding: 0;
-}
-
-#tela-disciplinas li,
-#tela-professores li {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 12px 15px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-#tela-anexos li a {
+label {
   display: block;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 12px 15px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: var(--color-text-secondary);
+}
+
+/* Campos de Input e Select */
+.campo {
+  width: 100%;
+  padding: 10px;
   border-radius: 8px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  text-decoration: none;
-  color: #fff;
-  transition: background-color 0.2s;
+  border: 1px solid var(--color-secundary);
+  margin-bottom: 15px;
+  font-size: 15px;
+  background-color: var(--color-card-bg);
+  color: var(--color-text-main);
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
-#tela-anexos li a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+/* Botões */
+.btn {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 12px;
+  /* Cor do texto é branca no tema claro, onde o fundo é azul */
+  color: #fff; 
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-
-/* ======================================= */
-/* === REGRAS DO DARK MODE (.dark-mode) === */
-/* ======================================= */
-
-.dark-mode {
-    /* Fundo da página: Escuro */
-    background: #121212 !important; 
+/* CORREÇÃO: Mudar cor do texto do botão para preto no modo escuro (onde o botão é amarelo claro) */
+body[data-theme="dark"] .btn:not(.voltar) {
+    color: #000; /* Texto preto para contrastar com o Amarelo Primário no modo escuro */
 }
 
-.dark-mode .top-bar {
-    /* Barra superior: Mais escura */
-    background-color: #0d0d0d; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    color: #ffffff;
+.btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-.dark-mode .app {
-    /* Fundo do aplicativo: Mais escuro */
-    background: #1f1f1f; 
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-    color: #e0e0e0;
+.btn.voltar {
+  background: none;
+  color: var(--color-secundary);
+  margin-top: 15px;
+  box-shadow: none;
 }
 
-.dark-mode h1, .dark-mode label, .dark-mode p {
-    color: #ffffff;
+.btn.voltar:hover {
+    color: var(--color-text-main);
+    background: none;
+    filter: none;
+    box-shadow: none;
 }
 
-.dark-mode h2 {
-    /* Cor de destaque para o modo escuro (magenta/ciano) */
-    color: #03dac6; 
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
-.dark-mode .campo {
-    /* Campos de input: Mais escuros */
-    background-color: #2c2c2c; 
-    color: #ffffff;
-    border: 1px solid #4a4a4a;
+/* Cards de Conteúdo */
+.card {
+  background-color: var(--color-card-bg);
+  color: var(--color-text-main);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  border-left: 5px solid var(--color-primary);
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
-.dark-mode #theme-toggle {
-    border-color: #03dac6;
-    color: #03dac6;
+.card h2 {
+    color: var(--color-primary-dark);
 }
 
-.dark-mode #theme-toggle:hover {
-    background: rgba(3, 218, 198, 0.1);
+.card p {
+    margin-top: 5px;
 }
 
-
-.dark-mode #tela-disciplinas li,
-.dark-mode #tela-professores li,
-.dark-mode #tela-anexos li a {
-    /* Itens de lista: Fundo sutil */
-    background-color: rgba(255, 255, 255, 0.08); 
-    color: #e0e0e0;
+/* Cards Especiais */
+.card.enviada {
+    border-left: 5px solid var(--color-success);
+    opacity: 0.8;
 }
 
-.dark-mode #tela-anexos li a:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+.card-aviso {
+    /* Cor de Laranja para Avisos */
+    border-left: 5px solid #00df1e; 
 }
 
-/* Ajustes dos botões Voltar/Sair/Menu para Dark Mode */
-.dark-mode .btn.voltar {
-    background: #3700b3; /* Cor primária escura */
-    color: #fff;
-}
-.dark-mode .btn.voltar:hover {
-    background: #6200ee;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+/* Mensagem de Lista Vazia */
+.empty-list-message {
+    text-align: center;
+    color: var(--color-secundary);
+    font-style: italic;
+    padding: 20px 0;
 }
 
-.dark-mode .btn.sair {
-    background: #cf6679; /* Vermelho mais suave */
-    color: #000;
-}
-.dark-mode .btn.sair:hover {
-    background: #b05062;
+/* Listas */
+#lista-professores, #lista-assuntos, #lista-recursos, #lista-contatos-uteis {
+    list-style: none;
+    padding: 0;
 }
 
-.dark-mode .btn.menu-btn {
-    background: #4a4a4a;
-    color: #ffffff;
+#lista-contatos-uteis li {
+    background-color: var(--color-background-darker);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--color-success);
 }
-.dark-mode .btn.menu-btn:hover {
-    background: #5c5c5c;
+
+#lista-contatos-uteis a {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+/* Estilos de inputs em grupo (para a tela de Atividades) */
+.input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-group input[type="file"] {
+    flex-grow: 1;
+}
+
+/* Estilo para a caixa do Admin na tela de seleção (novo) */
+#admin-login-fields label, #admin-login-fields p {
+    color: var(--color-text-main) !important;
+}
+
+#admin-login-fields .campo {
+    border-color: var(--color-secundary);
 }
