@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia do Estudante</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="light">
+  <header class="top-bar">
+    <img src="https://i.im.ge/2025/04/11/pVTi0z.logo.png" alt="logo" />
+    <h1>Guia do Estudante</h1>
+    <!-- Botão de Modo Escuro -->
+    <button class="theme-toggle-btn" onclick="toggleTheme()">
+      <span id="theme-icon">🌙</span>
+    </button>
+  </header>
+
+  <main class="app">
+    <!-- TELA DE SELEÇÃO: Login do Aluno E ADMIN -->
+    <section class="tela ativo" id="tela-selecao">
+      <h1 style="font-size: 28px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+        👋 Acesso ao Guia
+      </h1>
+      <p style="text-align: center; margin-bottom: 25px; color: var(--color-secundary);">
+        Preencha seus dados para começar:
+      </p>
+
+      <label for="nome">Nome Completo:</label>
+      <input type="text" id="nome" class="campo" placeholder="Ex: Maria Silva">
+
+      <label for="curso">Curso:</label>
+      <select id="curso" class="campo">
+        <option value="" disabled selected>Escolha o curso</option>
+        <option>Informática</option>
+        <option>Análises Clínicas</option>
+        <option>Nutrição</option>
+        <option>Edificações</option>
+        <option>Química</option>
+        <option>Meio Ambiente</option>
+      </select>
+
+      <label for="ano">Ano:</label>
+      <select id="ano" class="campo">
+        <option value="" disabled selected>Selecione o ano</option>
+        <option>1º Ano</option>
+        <option>2º Ano</option>
+        <option>3º Ano</option>
+      </select>
+
+      <button class="btn" onclick="entrar()" style="margin-top: 20px;">
+        ACESSAR O MEU GUIA (ALUNO)
+      </button>
+      
+      <!-- Toggle para Acesso Admin -->
+      <button class="btn admin-btn" id="btn-toggle-admin" onclick="toggleAdminLoginFields(event)" style="margin-top: 15px; background: #333; color: white;">
+        ⚙️ Acesso Administrativo
+      </button>
+      
+      <div id="admin-login-fields" style="display: none; margin-top: 20px; padding: 15px; border-radius: 12px; background: var(--color-background-darker);">
+        <p style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--color-text-main);">
+            Insira a senha do Professor:
+        </p>
+
+        <label for="senha-admin">Senha:</label>
+        <input type="password" id="senha-admin" class="campo" placeholder="Senha do Professor">
+
+        <button class="btn btn-action" onclick="logarAdmin()" style="margin-top: 10px; background: linear-gradient(90deg, #ff6b6b, #ff4757);">
+            ENTRAR NO PAINEL ADMIN
+        </button>
+      </div>
+      
+      <p id="auth-status" style="margin-top: 15px; font-size: 12px; color: var(--color-text-subtle); text-align: center;"></p>
+
+    </section>
+    
+    <!-- TELA INICIAL: ADICIONADO ALERTA DE NOTIFICAÇÕES E NOVO BOTÃO -->
+    <section class="tela" id="tela-inicial">
+      <h1 id="info-aluno">Menu Principal</h1>
+      
+      <!-- CARD DE NOTIFICAÇÕES/ALERTAS -->
+      <div id="alertas-proximos" class="card" style="margin-bottom: 25px; display: none; border: 2px solid var(--color-secundary);">
+        <!-- Conteúdo dinâmico inserido por JavaScript -->
+      </div>
+      
+      <button class="btn" onclick="mudarTela('avisos')">📣 Mural de Avisos</button>
+      <button class="btn" onclick="mudarTela('calendario')">Calendário de Provas</button>
+      <button class="btn" onclick="mudarTela('atividades')">Atividades para Entregar</button>
+      <button class="btn" onclick="mudarTela('assuntos')">Assuntos</button>
+      <button class="btn" onclick="mudarTela('recursos')">Recursos de Estudo</button> 
+      <button class="btn" onclick="mudarTela('professores')">Professores e Contatos</button>
+      <button class="btn voltar" onclick="mudarTela('selecao')">← Trocar Aluno/Curso</button>
+    </section>
+    
+    <!-- TELA DE ADMINISTRAÇÃO: ADICIONADO BOTÃO DE LIMPEZA -->
+    <section class="tela" id="tela-admin">
+      <h1>Painel do Administrador</h1>
+      <p>Selecione o que deseja cadastrar:</p>
+      <button class="btn" onclick="mudarTela('adicionar-prova')">➕ Cadastrar Prova</button>
+      <button class="btn admin-btn" onclick="mudarTela('adicionar-atividade')">📝 Cadastrar Atividade</button>
+      <button class="btn admin-btn" onclick="mudarTela('adicionar-aviso')" style="background: linear-gradient(90deg, #10b981, #059669);">📰 Cadastrar Aviso</button>
+      
+      <!-- BOTÃO DE LIMPEZA -->
+      <button class="btn voltar" onclick="limparItensAntigos()" style="background: #e67e22; border: none; margin-top: 20px;">🧹 Limpar Itens Antigos</button>
+      
+      <button class="btn voltar" onclick="mudarTela('inicial')" style="margin-top: 5px;">← Voltar ao Menu</button>
+    </section>
+
+    <!-- FORMULÁRIO DE PROVA -->
+    <section class="tela" id="tela-adicionar-prova">
+      <h1>Cadastrar Nova Prova</h1>
+      <label for="prova-data">Data (DD/MM/AAAA):</label>
+      <!-- Alterado para suportar AAAA para melhor comparação no Firestore -->
+      <input type="text" id="prova-data" class="campo" placeholder="Ex: 25/11/2025" maxlength="10">
+
+      <label for="prova-materia">Matéria:</label>
+      <input type="text" id="prova-materia" class="campo" placeholder="Ex: Química">
+
+      <label for="prova-assunto">Assunto:</label>
+      <input type="text" id="prova-assunto" class="campo" placeholder="Ex: Balanceamento Químico">
+
+      <button class="btn" onclick="adicionarProva()">Salvar Prova</button>
+      <button class="btn voltar" onclick="mudarTela('admin')">← Voltar</button>
+    </section>
+    
+    <!-- FORMULÁRIO: CADASTRO DE ATIVIDADE -->
+    <section class="tela" id="tela-adicionar-atividade">
+      <h1>Cadastrar Nova Atividade</h1>
+      <label for="atividade-nome">Nome da Atividade:</label>
+      <input type="text" id="atividade-nome" class="campo" placeholder="Ex: Resumo Cap. 5">
+
+      <label for="atividade-materia">Matéria:</label>
+      <input type="text" id="atividade-materia" class="campo" placeholder="Ex: Português">
+
+      <label for="atividade-data-entrega">Data de Entrega (DD/MM/AAAA):</label>
+       <!-- Alterado para suportar AAAA para melhor comparação no Firestore -->
+      <input type="text" id="atividade-data-entrega" class="campo" placeholder="Ex: 10/12/2025" maxlength="10">
+
+      <button class="btn" onclick="adicionarAtividade()">Salvar Atividade</button>
+      <button class="btn voltar" onclick="mudarTela('admin')">← Voltar</button>
+    </section>
+    
+    <!-- FORMULÁRIO: CADASTRO DE AVISO (ADMIN) -->
+    <section class="tela" id="tela-adicionar-aviso">
+      <h1>Cadastrar Novo Aviso</h1>
+      <label for="aviso-titulo">Título:</label>
+      <input type="text" id="aviso-titulo" class="campo" placeholder="Ex: Mudança de horário de aula">
+
+      <label for="aviso-texto">Mensagem:</label>
+      <textarea id="aviso-texto" class="campo" rows="4" placeholder="Detalhes do aviso..."></textarea>
+      
+      <button class="btn" onclick="adicionarAviso()" style="background: linear-gradient(90deg, #10b981, #059669); color: white;">Publicar Aviso</button>
+      <button class="btn voltar" onclick="mudarTela('admin')">← Voltar</button>
+    </section>
+
+    <!-- TELA DE CALENDÁRIO -->
+    <section class="tela" id="tela-calendario">
+      <h1>Calendário de Provas</h1>
+      <div id="lista-provas">
+        <!-- Provas dinâmicas serão inseridas aqui -->
+        <p class="empty-list-message">Carregando provas...</p>
+      </div>
+      <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
+    </section>
+    
+    <!-- TELA DO MURAL DE AVISOS (ALUNO) -->
+    <section class="tela" id="tela-avisos">
+      <h1>Mural de Avisos da Escola</h1>
+      <div id="lista-avisos">
+        <!-- Avisos dinâmicos serão inseridos aqui -->
+        <p class="empty-list-message">Carregando avisos...</p>
+      </div>
+      <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
+    </section>
+
+
+    <!-- TELA: ATIVIDADES PARA ENTREGAR (ALUNO) -->
+    <section class="tela" id="tela-atividades">
+      <h1>Atividades para Entregar</h1>
+      <div id="lista-atividades">
+        <!-- Atividades cadastradas pelo Admin serão inseridas aqui -->
+        <p class="empty-list-message">Carregando atividades...</p>
+      </div>
+      <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
+    </section>
+
+    <!-- TELA DE ASSUNTOS -->
+    <section class="tela" id="tela-assuntos">
+      <h1>Assuntos por Matéria</h1>
+      <p style="margin-bottom: 20px;">Lista de tópicos essenciais para cada disciplina. Utilize como guia para revisões.</p>
+      <ul id="lista-assuntos">
+        <p class="empty-list-message">Conteúdo de Assuntos será cadastrado pelo Admin em uma futura atualização.</p>
+      </ul>
+      <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
+    </section>
+
+    <!-- TELA DE RECURSOS DE ESTUDO -->
+    <section class="tela" id="tela-recursos">
+      <h1>📚 Recursos de Estudo</h1>
+      <p style="margin-bottom: 20px;">Materiais de apoio e links importantes fornecidos pelos professores.</p>
+      <ul id="lista-recursos">
+        <p class="empty-list-message">Nenhum link ou material de apoio cadastrado.</p>
+      </ul>
+      <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
+    </section>
+
+    <!-- TELA PROFESSORES: Contatos Úteis atualizados com o link da Ouvidoria -->
+    <section class="tela" id="tela-professores">
+      <h1>Professores e Contatos</h1>
+      
+      <h2 style="margin-top: 20px;">Contatos Úteis da Escola</h2>
+      <ul id="lista-contatos-uteis">
+        <li>Secretaria: (99) 9999-9999</li>
+        <li>Coordenação: (99) 8888-8888</li>
+        <!-- LINK DA OUVIDORIA ATUALIZADO -->
+        <li><a href="https://ouvidoria-cetep-lnab-yitb.onrender.com/" target="_blank">Ouvidoria da Escola (Clique aqui)</a></li> 
+      </ul>
+
+      <h2 style="margin-top: 20px;">Professores</h2>
+      <ul id="lista-professores">
+        <p class="empty-list-message">Nenhum professor cadastrado para este curso/ano.</p>
+      </ul>
+
+      <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
+    </section>
+  </main>
+
+  <script type="module">
+    // --- IMPORTAÇÕES DO FIREBASE (MANDATÓRIO) ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { 
+        getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, 
+        setPersistence, browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { 
+        getFirestore, doc, setDoc, addDoc, onSnapshot, collection, query, orderBy, 
+        deleteDoc, getDocs, where, limit, runTransaction, Timestamp, 
+        setLogLevel // Adicionado para logs de debug
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // --- VARIÁVEIS GLOBAIS DE AMBIENTE E CONFIGURAÇÃO ---
+    const SENHA_ADMIN = "1234"; 
+    const STORAGE_USER_KEY = 'guiaEstudante_user';
+    const STORAGE_THEME_KEY = 'guiaEstudante_theme';
+    
+    // Configurações e Instâncias do Firebase
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    
+    let app, db, auth;
+    let userId = null; // ID do usuário autenticado (UID)
+    let isAuthReady = false; // Flag para garantir que o Firestore só comece a ouvir depois da autenticação
+
+    // --- Caminhos do Firestore (Público para dados compartilhados da escola) ---
+    const getCollectionPath = (collectionName) => 
+      `/artifacts/${appId}/public/data/${collectionName}`;
+    
+    const COLLECTION_PROVAS = getCollectionPath('provas');
+    const COLLECTION_ATIVIDADES = getCollectionPath('atividades');
+    const COLLECTION_AVISOS = getCollectionPath('avisos');
+    const COLLECTION_ENVIOS = getCollectionPath('envios'); // Status de envio por aluno
+
+    // --- Inicialização do Firebase ---
+    async function initializeFirebase() {
+        if (Object.keys(firebaseConfig).length === 0) {
+            console.error("Firebase config não encontrada. O aplicativo será executado sem persistência.");
+            return;
+        }
+
+        try {
+            // setLogLevel('Debug'); // Ativar logs de debug
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            // Persistência local para manter o estado do usuário
+            await setPersistence(auth, browserLocalPersistence);
+
+            // Tenta logar com o token customizado
+            if (initialAuthToken) {
+                await signInWithCustomToken(auth, initialAuthToken);
+            } else {
+                // Caso contrário, usa login anônimo
+                await signInAnonymously(auth);
+            }
+            
+            // Listener de estado de autenticação
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userId = user.uid;
+                    isAuthReady = true;
+                    document.getElementById('auth-status').textContent = `Autenticado. UID: ${userId}`;
+                    
+                    // Se o usuário já está logado no localStorage, inicia a tela
+                    const userInfo = JSON.parse(localStorage.getItem(STORAGE_USER_KEY));
+                    if (userInfo) {
+                        loadUserInfo(userInfo);
+                        startListeners(); // Inicia os listeners do Firestore
+                    }
+                } else {
+                    isAuthReady = false;
+                    document.getElementById('auth-status').textContent = 'Aguardando autenticação...';
+                }
+            });
+
+        } catch (error) {
+            console.error("Erro ao inicializar Firebase ou autenticar:", error);
+            document.getElementById('auth-status').textContent = `Erro de Autenticação. Recarregue.`;
+        }
+    }
+    
+    // --- Listener de Dados (Real-time) ---
+    let unsubscribeProvas;
+    let unsubscribeAtividades;
+    let unsubscribeAvisos;
+    
+    function startListeners() {
+        if (!isAuthReady || !db) return;
+
+        // Listener para Provas (Carregado na tela inicial, filtrado na tela calendário)
+        const qProvas = query(collection(db, COLLECTION_PROVAS), orderBy('timestamp', 'asc'));
+        unsubscribeProvas = onSnapshot(qProvas, (snapshot) => {
+            const provas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            window.provasData = provas; // Armazena globalmente para acesso fácil
+            if (document.querySelector('#tela-calendario').classList.contains('ativo')) {
+                carregarProvas();
+            }
+            verificarAlertas();
+        }, error => console.error("Erro ao carregar provas:", error));
+
+        // Listener para Atividades
+        const qAtividades = query(collection(db, COLLECTION_ATIVIDADES), orderBy('timestamp', 'asc'));
+        unsubscribeAtividades = onSnapshot(qAtividades, (snapshot) => {
+            const atividades = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            window.atividadesData = atividades; // Armazena globalmente para acesso fácil
+            if (document.querySelector('#tela-atividades').classList.contains('ativo')) {
+                carregarAtividades();
+            }
+            verificarAlertas();
+        }, error => console.error("Erro ao carregar atividades:", error));
+
+        // Listener para Avisos
+        const qAvisos = query(collection(db, COLLECTION_AVISOS), orderBy('timestamp', 'desc'), limit(50));
+        unsubscribeAvisos = onSnapshot(qAvisos, (snapshot) => {
+            const avisos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            window.avisosData = avisos; // Armazena globalmente para acesso fácil
+            if (document.querySelector('#tela-avisos').classList.contains('ativo')) {
+                carregarAvisos();
+            }
+        }, error => console.error("Erro ao carregar avisos:", error));
+    }
+
+
+    // --- Funções de Inicialização e Tema ---
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadTheme();
+        initializeFirebase(); // Inicia o Firebase na carga da página
+        // O loadUserInfo e startListeners serão chamados após a autenticação
+    });
+
+    function loadTheme() {
+        const savedTheme = localStorage.getItem(STORAGE_THEME_KEY) || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        document.getElementById('theme-icon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem(STORAGE_THEME_KEY, newTheme);
+        document.getElementById('theme-icon').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+    
+    function loadUserInfo(userInfo) {
+         document.getElementById('info-aluno').textContent = `Bem-vindo(a), ${userInfo.nome} (${userInfo.ano} - ${userInfo.curso})`;
+         document.getElementById('nome').value = userInfo.nome;
+         document.getElementById('curso').value = userInfo.curso;
+         document.getElementById('ano').value = userInfo.ano;
+         mudarTela('inicial', false);
+         verificarAlertas();
+    }
+
+
+    // --- Funções de Navegação e Autenticação (Mantidas) ---
+
+    window.toggleAdminLoginFields = function(event) {
+        event.preventDefault(); 
+        const fields = document.getElementById('admin-login-fields');
+        const toggleBtn = document.getElementById('btn-toggle-admin');
+        
+        if (fields.style.display === 'none' || fields.style.display === '') {
+            fields.style.display = 'block';
+            toggleBtn.textContent = 'Ocultar Acesso Administrativo';
+            toggleBtn.style.background = '#444'; 
+        } else {
+            fields.style.display = 'none';
+            toggleBtn.textContent = '⚙️ Acesso Administrativo';
+            toggleBtn.style.background = '#333';
+        }
+    }
+
+    window.logarAdmin = function() {
+        const senhaInput = document.getElementById('senha-admin');
+        const senha = senhaInput.value;
+
+        if (senha === SENHA_ADMIN) {
+            senhaInput.value = '';
+            document.getElementById('admin-login-fields').style.display = 'none';
+            document.getElementById('btn-toggle-admin').textContent = '⚙️ Acesso Administrativo';
+            document.getElementById('btn-toggle-admin').style.background = '#333';
+
+            mudarTela('admin', false);
+        } else {
+            console.error("Senha incorreta. Acesso negado.");
+            senhaInput.value = '';
+        }
+    }
+
+
+    window.mudarTela = function(telaId, checkAuth = true) {
+      const telas = document.querySelectorAll('.tela');
+      telas.forEach(tela => tela.classList.remove('ativo'));
+      document.getElementById(`tela-${telaId}`).classList.add('ativo');
+      
+      if (telaId === 'inicial') {
+        verificarAlertas();
+      } else if (telaId === 'calendario') {
+        carregarProvas();
+      } else if (telaId === 'atividades') {
+        carregarAtividades();
+      } else if (telaId === 'avisos') { 
+        carregarAvisos();
+      } else if (telaId === 'selecao') {
+        // Não faz nada no localStorage, apenas troca a tela
+      }
+    }
+
+    window.entrar = function() {
+      const nome = document.getElementById('nome').value.trim();
+      const curso = document.getElementById('curso').value;
+      const ano = document.getElementById('ano').value;
+      
+      if (!nome || !curso || !ano) {
+        console.error('Por favor, preencha seu nome, curso e ano.');
+        return;
+      }
+      
+      const userInfo = { nome, curso, ano };
+      localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(userInfo));
+
+      loadUserInfo(userInfo);
+    }
+
+    // --- Funções de Notificação e Datas (Adaptadas para AAAA) ---
+    
+    /** * Converte data DD/MM/AAAA para um Timestamp Unix.
+     * @param {string} dataStr - Data no formato DD/MM/AAAA.
+     * @returns {number|null} Timestamp da data alvo à meia-noite, ou null se formato inválido.
+     */
+    function dataParaTimestamp(dataStr) {
+      const partes = dataStr.split('/');
+      if (partes.length !== 3) return null;
+      const dia = parseInt(partes[0]);
+      const mes = parseInt(partes[1]) - 1; // Mês é zero-based (0=Jan)
+      const ano = parseInt(partes[2]);
+
+      // Verifica se a data é válida
+      if (isNaN(dia) || isNaN(mes) || isNaN(ano)) return null;
+      
+      const dataAlvo = new Date(ano, mes, dia);
+      dataAlvo.setHours(0, 0, 0, 0); // Define para meia-noite
+
+      // Verifica se a data é razoável (por exemplo, após 2024 e menos de 10 anos futuro)
+      if (dataAlvo.getFullYear() < 2024 || dataAlvo.getFullYear() > new Date().getFullYear() + 10) {
+          console.warn(`Data ${dataStr} parece inválida ou muito distante.`);
+          return null;
+      }
+
+      return dataAlvo.getTime();
+    }
+    
+    function getTodayTimestamp() {
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+        return hoje.getTime();
+    }
+
+    window.verificarAlertas = async function() {
+      if (!isAuthReady || !window.provasData || !window.atividadesData) {
+          // Espera os dados serem carregados pelos listeners
+          document.getElementById('alertas-proximos').style.display = 'none';
+          return;
+      }
+        
+      const hojeTs = getTodayTimestamp();
+      
+      // Intervalo de alerta: até 3 dias a partir de hoje
+      const limiteAlerta = new Date(hojeTs);
+      limiteAlerta.setDate(limiteAlerta.getDate() + 4); 
+      const limiteAlertaTs = limiteAlerta.getTime();
+      
+      let provasProximas = 0;
+      let atividadesProximas = 0;
+      let atividadesPendentes = 0;
+      
+      const provas = window.provasData || [];
+      const atividades = window.atividadesData || [];
+      const statusEnvio = await obterStatusEnvio(); // Busca status de envio do Firestore
+
+      // 1. Provas
+      provas.forEach(p => {
+        const provaTs = dataParaTimestamp(p.data);
+        if (provaTs && provaTs >= hojeTs && provaTs < limiteAlertaTs) {
+          provasProximas++;
+        }
+      });
+      
+      // 2. Atividades
+      atividades.forEach(a => {
+        // Verifica se a atividade foi enviada
+        if (!statusEnvio[a.id] || statusEnvio[a.id].status !== 'enviada') {
+            atividadesPendentes++;
+            
+            const atividadeTs = dataParaTimestamp(a.dataEntrega);
+            if (atividadeTs && atividadeTs >= hojeTs && atividadeTs < limiteAlertaTs) {
+              atividadesProximas++;
+            }
+        }
+      });
+
+      const alertaElemento = document.getElementById('alertas-proximos');
+      let htmlAlerta = '<h2>🚨 Alertas de Organização</h2>';
+      let temAlertaUrgente = false;
+
+      if (provasProximas > 0) {
+        htmlAlerta += `<p>• 📅 ${provasProximas} Prova(s) marcada(s) para os próximos 3 dias. Estude!</p>`;
+        temAlertaUrgente = true;
+      }
+      if (atividadesProximas > 0) {
+        htmlAlerta += `<p>• 📝 ${atividadesProximas} Atividade(s) com entrega nos próximos 3 dias.</p>`;
+        temAlertaUrgente = true;
+      }
+      if (atividadesPendentes > 0) {
+        htmlAlerta += `<p>• ⏳ Você tem ${atividadesPendentes} atividade(s) pendente(s) no total.</p>`;
+      }
+      
+      if (!temAlertaUrgente && atividadesPendentes === 0) {
+        htmlAlerta = '<h2>✅ Tudo em Ordem!</h2><p>Nenhuma prova ou entrega urgente para os próximos dias.</p>';
+        alertaElemento.style.borderColor = 'var(--color-success)';
+      } else if (!temAlertaUrgente && atividadesPendentes > 0) {
+        htmlAlerta = `<h2>👍 Sem Urgência</h2><p>Você tem ${atividadesPendentes} atividade(s) pendente(s), mas sem prazo para os próximos 3 dias.</p>`;
+        alertaElemento.style.borderColor = 'var(--color-secundary)';
+      } else {
+        alertaElemento.style.borderColor = 'var(--color-alert)';
+      }
+      
+      alertaElemento.innerHTML = htmlAlerta;
+      alertaElemento.style.display = 'block';
+    }
+
+
+    // --- FUNÇÃO DE LIMPEZA GERAL (FIREBASE) ---
+
+    window.limparItensAntigos = async function() {
+        if (!isAuthReady || !db) return console.error("Firebase não está pronto.");
+        
+        const hojeTs = getTodayTimestamp();
+        const batch = db.batch();
+        let provasRemovidas = 0;
+        let atividadesRemovidas = 0;
+        let avisosRemovidos = 0;
+        
+        try {
+            // 1. Limpa Provas Passadas
+            const provasSnapshot = await getDocs(collection(db, COLLECTION_PROVAS));
+            provasSnapshot.forEach(doc => {
+                const p = doc.data();
+                const provaTs = dataParaTimestamp(p.data);
+                if (provaTs !== null && provaTs < hojeTs) {
+                    batch.delete(doc.ref);
+                    provasRemovidas++;
+                }
+            });
+            
+            // 2. Limpa Atividades Passadas
+            const atividadesSnapshot = await getDocs(collection(db, COLLECTION_ATIVIDADES));
+            atividadesSnapshot.forEach(doc => {
+                const a = doc.data();
+                const atividadeTs = dataParaTimestamp(a.dataEntrega);
+                if (atividadeTs !== null && atividadeTs < hojeTs) {
+                    batch.delete(doc.ref);
+                    atividadesRemovidas++;
+                }
+            });
+
+            // 3. Limpa Avisos com mais de 30 dias (usando a data de criação no Firestore)
+            const limite30Dias = Timestamp.fromDate(new Date(hojeTs - (30 * 24 * 60 * 60 * 1000)));
+            const qAvisosAntigos = query(collection(db, COLLECTION_AVISOS), where('timestamp', '<', limite30Dias));
+            const avisosSnapshot = await getDocs(qAvisosAntigos);
+            avisosSnapshot.forEach(doc => {
+                batch.delete(doc.ref);
+                avisosRemovidos++;
+            });
+
+            await batch.commit();
+
+            let mensagem = `Limpeza concluída!
+            
+            - ${provasRemovidas} prova(s) passada(s) removida(s).
+            - ${atividadesRemovidas} atividade(s) passada(s) removida(s).
+            - ${avisosRemovidos} aviso(s) com mais de 30 dias removido(s).
+            
+            O Guia do Estudante está mais organizado! (Os dados serão atualizados em segundos)`;
+            
+            console.log(mensagem);
+            
+            const btn = document.querySelector('#tela-admin .btn[onclick="limparItensAntigos()"]');
+            btn.textContent = "🧹 Limpeza Concluída!";
+            setTimeout(() => {
+                btn.textContent = "🧹 Limpar Itens Antigos";
+            }, 3000);
+
+            mudarTela('admin');
+        } catch (error) {
+            console.error("Erro ao limpar itens antigos no Firebase:", error);
+        }
+    }
+
+
+    // --- Funções de Gestão de Provas (Admin/Aluno - FIREBASE) ---
+
+    window.adicionarProva = async function() {
+      if (!isAuthReady || !db) return console.error("Firebase não está pronto.");
+        
+      const dataInput = document.getElementById('prova-data');
+      const materiaInput = document.getElementById('prova-materia');
+      const assuntoInput = document.getElementById('prova-assunto');
+
+      const data = dataInput.value.trim();
+      const materia = materiaInput.value.trim();
+      const assunto = assuntoInput.value.trim();
+      
+      if (!data || !materia || !assunto) {
+        console.error('Por favor, preencha todos os campos da prova.');
+        return;
+      }
+      
+      if (dataParaTimestamp(data) === null) {
+          console.error('Formato de data inválido. Use DD/MM/AAAA.');
+          return;
+      }
+
+      try {
+          await addDoc(collection(db, COLLECTION_PROVAS), {
+            data,
+            materia,
+            assunto,
+            timestamp: Timestamp.now()
+          });
+
+          console.log(`Prova de ${materia} em ${data} adicionada com sucesso!`);
+
+          dataInput.value = '';
+          materiaInput.value = '';
+          assuntoInput.value = '';
+          mudarTela('admin');
+          
+      } catch (error) {
+          console.error("Erro ao adicionar prova:", error);
+      }
+    }
+
+    window.carregarProvas = function() {
+      const listaProvasElemento = document.getElementById('lista-provas');
+      const provas = window.provasData || []; // Usa os dados carregados pelo listener
+      
+      if (provas.length === 0) {
+        listaProvasElemento.innerHTML = `<p class="empty-list-message">Nenhuma prova cadastrada pelo Admin.</p>`;
+        return;
+      }
+      
+      const hojeTs = getTodayTimestamp();
+
+      // Filtra e ordena as provas futuras (já estão ordenadas por data pelo query)
+      const provasFuturas = provas.filter(p => dataParaTimestamp(p.data) !== null && dataParaTimestamp(p.data) >= hojeTs);
+      
+      if (provasFuturas.length === 0) {
+        listaProvasElemento.innerHTML = `<p class="empty-list-message">Nenhuma prova futura cadastrada.</p>`;
+        return;
+      }
+
+      let htmlProvas = provasFuturas.map(prova => `
+          <div class="card">
+            <h2>📅 ${prova.data} - ${prova.materia}</h2>
+            <p>Assunto: ${prova.assunto}</p>
+          </div>
+        `).join('');
+      
+      listaProvasElemento.innerHTML = htmlProvas;
+    }
+
+    // --- Funções de Gestão de ATIVIDADES (Professor/Admin - FIREBASE) ---
+
+    window.adicionarAtividade = async function() {
+        if (!isAuthReady || !db) return console.error("Firebase não está pronto.");
+        
+        const nomeInput = document.getElementById('atividade-nome');
+        const materiaInput = document.getElementById('atividade-materia');
+        const dataEntregaInput = document.getElementById('atividade-data-entrega');
+
+        const nome = nomeInput.value.trim();
+        const materia = materiaInput.value.trim();
+        const dataEntrega = dataEntregaInput.value.trim();
+
+        if (!nome || !materia || !dataEntrega) {
+            console.error('Por favor, preencha todos os campos da atividade.');
+            return;
+        }
+        
+        if (dataParaTimestamp(dataEntrega) === null) {
+          console.error('Formato de data inválido. Use DD/MM/AAAA.');
+          return;
+        }
+
+        try {
+            await addDoc(collection(db, COLLECTION_ATIVIDADES), {
+                nome,
+                materia,
+                dataEntrega,
+                timestamp: Timestamp.now()
+            });
+
+            console.log(`Atividade "${nome}" cadastrada com sucesso!`);
+
+            nomeInput.value = '';
+            materiaInput.value = '';
+            dataEntregaInput.value = '';
+            mudarTela('admin');
+            
+        } catch (error) {
+            console.error("Erro ao adicionar atividade:", error);
+        }
+    }
+    
+    // --- Funções de Gestão de AVISOS (Professor/Admin - FIREBASE) ---
+
+    window.adicionarAviso = async function() {
+      if (!isAuthReady || !db) return console.error("Firebase não está pronto.");
+        
+      const tituloInput = document.getElementById('aviso-titulo');
+      const textoInput = document.getElementById('aviso-texto');
+      
+      const titulo = tituloInput.value.trim();
+      const texto = textoInput.value.trim();
+
+      if (!titulo || !texto) {
+        console.error('Por favor, preencha o título e a mensagem do aviso.');
+        return;
+      }
+
+      try {
+          await addDoc(collection(db, COLLECTION_AVISOS), {
+            titulo,
+            texto,
+            // A data de publicação é inferida do timestamp para fins de exibição
+            data: new Date().toLocaleDateString('pt-BR'),
+            timestamp: Timestamp.now()
+          });
+
+          console.log(`Aviso "${titulo}" publicado com sucesso!`);
+
+          tituloInput.value = '';
+          textoInput.value = '';
+          mudarTela('admin');
+          
+      } catch (error) {
+          console.error("Erro ao adicionar aviso:", error);
+      }
+    }
+
+    window.carregarAvisos = function() {
+      const listaAvisosElemento = document.getElementById('lista-avisos');
+      const avisos = window.avisosData || []; // Usa os dados carregados pelo listener
+
+      if (avisos.length === 0) {
+        listaAvisosElemento.innerHTML = '<p class="empty-list-message" style="color: var(--color-text-main);">Nenhum aviso geral publicado pela escola até o momento.</p>';
+        return;
+      }
+
+      let htmlAvisos = avisos.map(aviso => {
+          return `
+              <div class="card card-aviso">
+                  <h2 style="color: var(--color-primary-dark);">${aviso.titulo}</h2>
+                  <p style="margin-bottom: 8px;">${aviso.texto.replace(/\n/g, '<br>')}</p>
+                  <small style="display: block; text-align: right; color: var(--color-secundary); font-size: 11px;">Publicado em: ${aviso.data}</small>
+              </div>
+          `;
+      }).join('');
+
+      listaAvisosElemento.innerHTML = htmlAvisos;
+    }
+
+
+    // --- Funções de ENVIOS do Aluno (FIREBASE) ---
+
+    /**
+     * Obtém o status de envio do aluno atual para todas as atividades.
+     * @returns {Object} Mapa de {atividadeId: {status: 'enviada', timestamp: ...}}
+     */
+    async function obterStatusEnvio() {
+        if (!isAuthReady || !db || !userId) return {};
+        
+        // A chave de envio é o UID do usuário (aluno)
+        const docRef = doc(db, COLLECTION_ENVIOS, userId);
+        
+        try {
+            const docSnap = await db.getDoc(docRef);
+            if (docSnap.exists()) {
+                // Retorna o mapa de atividades (ex: { 'id1': { status: 'enviada', ... } })
+                return docSnap.data().atividades || {};
+            }
+            return {};
+        } catch (error) {
+            console.error("Erro ao buscar status de envio:", error);
+            return {};
+        }
+    }
+
+    /**
+     * Salva o status de envio de uma atividade específica.
+     */
+    async function salvarStatusEnvio(atividadeId, status) {
+        if (!isAuthReady || !db || !userId) {
+             console.error('Erro: Firebase ou usuário não identificados para salvar o envio.');
+             return;
+        }
+
+        const docRef = doc(db, COLLECTION_ENVIOS, userId);
+        
+        try {
+            // Usa runTransaction para garantir atomicidade ao atualizar um subcampo
+            await runTransaction(db, async (transaction) => {
+                const docSnap = await transaction.get(docRef);
+                const envios = docSnap.exists() ? docSnap.data().atividades || {} : {};
+                
+                envios[atividadeId] = {
+                    status: status,
+                    timestamp: Timestamp.now()
+                };
+
+                transaction.set(docRef, { atividades: envios });
+            });
+            console.log("Status de envio atualizado com sucesso!");
+        } catch (error) {
+            console.error("Erro ao salvar status de envio:", error);
+        }
+    }
+    
+    window.confirmarEnvio = async function(atividadeId) {
+        await salvarStatusEnvio(atividadeId, 'enviada');
+        // A atualização da tela será tratada pelo listener na próxima linha (se o listener estivesse aqui)
+        // Como o listener já está ativo, ele forçará o recarregamento.
+        carregarAtividades(); 
+    }
+
+
+    // --- Funções de Exibição de Atividades (Aluno - FIREBASE) ---
+
+    window.carregarAtividades = async function() {
+        const listaAtividadesElemento = document.getElementById('lista-atividades');
+        const atividades = window.atividadesData || []; // Usa dados do listener
+        
+        if (atividades.length === 0) {
+            listaAtividadesElemento.innerHTML = '<p class="empty-list-message">Nenhuma atividade cadastrada pelo professor.</p>';
+            return;
+        }
+
+        const statusEnvio = await obterStatusEnvio(); // Busca status de envio atualizado
+        const hojeTs = getTodayTimestamp();
+        
+        // Filtra as atividades futuras (ou de hoje)
+        const atividadesFuturas = atividades.filter(a => dataParaTimestamp(a.dataEntrega) !== null && dataParaTimestamp(a.dataEntrega) >= hojeTs);
+        
+        if (atividadesFuturas.length === 0) {
+            listaAtividadesElemento.innerHTML = '<p class="empty-list-message">Nenhuma atividade pendente ou futura.</p>';
+            return;
+        }
+
+        let htmlAtividades = atividadesFuturas.map(a => {
+            const isEnviada = statusEnvio[a.id] && statusEnvio[a.id].status === 'enviada';
+            
+            return `
+                <div class="card ${isEnviada ? 'enviada' : ''}">
+                    <h2 class="tarefa-texto">${a.nome} (${a.materia})</h2>
+                    <p>Entrega: <strong>${a.dataEntrega}</strong></p>
+                    
+                    <div class="input-group" style="margin-top: 10px;">
+                        <!-- O input type="file" é apenas um placeholder visual neste ambiente de iframe -->
+                        <input type="file" class="campo" ${isEnviada ? 'disabled' : ''} style="padding: 5px;">
+                        
+                        <button class="btn btn-action" 
+                                onclick="confirmarEnvio('${a.id}')" 
+                                ${isEnviada ? 'disabled' : ''}
+                                style="width: auto; padding: 8px 10px; margin: 0; background: ${isEnviada ? '#4CAF50' : 'var(--color-primary)'}">
+                            ${isEnviada ? '✓ Enviada' : 'Confirmar Envio'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        listaAtividadesElemento.innerHTML = htmlAtividades;
+    }
+    
+  </script>
+</body>
+</html>
