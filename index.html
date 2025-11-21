@@ -4,11 +4,253 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guia do Estudante</title>
-  <link rel="stylesheet" href="style.css" />
+  
+  <!-- Estilos CSS Embutidos (Garantindo um único arquivo) -->
+  <style>
+    /* Variáveis de Tema (Definidas no body[data-theme]) */
+    :root {
+      --color-primary: #ffcc00; /* Amarelo principal */
+      --color-primary-dark: #ccaa00;
+      --color-secundary: #ff4757; /* Vermelho/alerta */
+      --color-alert: #ff6b6b; /* Cor de erro mais suave */
+      --color-success: #10b981; /* Cor de sucesso */
+    }
+
+    /* Estilos do Tema Claro (Padrão) */
+    body[data-theme="light"] {
+      --color-background-main: #f4f6f8;
+      --color-background-app: #ffffff;
+      --color-background-darker: #f0f2f4;
+      --color-text-main: #2c3e50;
+      --color-text-card: #2c3e50;
+      --color-border-card: #ecf0f1;
+      --color-input-bg: #ecf0f1;
+    }
+
+    /* Estilos do Tema Escuro */
+    body[data-theme="dark"] {
+      --color-background-main: #2c3e50;
+      --color-background-app: #34495e;
+      --color-background-darker: #2f4154;
+      --color-text-main: #ecf0f1;
+      --color-text-card: #2c3e50;
+      --color-border-card: #4a637d;
+      --color-input-bg: #1e3040;
+    }
+
+    /* Estilos globais */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--color-background-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 80px;
+      transition: background-color 0.3s;
+      color: var(--color-text-main);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #004080; /* Azul fixo para o header */
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 12px 25px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      z-index: 10;
+    }
+
+    .top-bar img {
+      height: 40px;
+      margin-right: 15px;
+    }
+
+    .top-bar h1 {
+      font-size: 22px;
+      font-weight: 600;
+      flex-grow: 1;
+      text-align: left;
+      margin: 0;
+    }
+
+    .theme-toggle-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 5px;
+      line-height: 1;
+    }
+
+    .app {
+      width: 90%;
+      max-width: 420px;
+      background-color: var(--color-background-app);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s;
+      margin-bottom: 30px;
+    }
+
+    .tela {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .tela.ativo {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 24px;
+      color: var(--color-text-main);
+      transition: color 0.3s;
+    }
+    
+    h2 {
+      font-size: 18px;
+      margin-bottom: 5px;
+      color: var(--color-primary-dark);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      color: var(--color-text-main);
+    }
+
+    .campo {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border-card);
+      background-color: var(--color-input-bg);
+      color: var(--color-text-main);
+      margin-bottom: 15px;
+      font-size: 16px;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+    
+    .campo:focus {
+        border-color: var(--color-primary-dark);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.2);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 12px;
+      background: var(--color-primary);
+      color: var(--color-text-card); /* Cor escura para contrastar com o amarelo */
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover:not([disabled]) {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn:disabled {
+        background-color: #ccc;
+        color: #666;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+    
+    .btn.voltar {
+        background: var(--color-background-darker);
+        color: var(--color-text-main);
+        box-shadow: none;
+        font-weight: 500;
+        margin-top: 15px;
+    }
+
+    .btn.admin-btn {
+      background: #333;
+      color: white;
+    }
+
+    .card {
+      background-color: var(--color-background-darker);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      border-left: 5px solid var(--color-primary);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    
+    .card.enviada {
+        border-left: 5px solid var(--color-success);
+        opacity: 0.8;
+    }
+    
+    .card h2 {
+        color: var(--color-primary-dark);
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    
+    .card p {
+        color: var(--color-text-main);
+        font-size: 14px;
+    }
+
+    .empty-list-message {
+        text-align: center;
+        color: #7f8c8d;
+        padding: 20px;
+        border: 1px dashed #bdc3c7;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+    
+    /* Estilo para a caixa de mensagem de feedback (NOVO) */
+    .feedback-message {
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+    }
+  </style>
 </head>
 <body data-theme="light">
   <header class="top-bar">
-    <img src="https://i.im.ge/2025/04/11/pVTi0z.logo.png" alt="logo" />
+    <!-- Imagem de logo com fallback -->
+    <img src="https://placehold.co/40x40/004080/fff?text=L" alt="logo" onerror="this.onerror=null; this.src='https://placehold.co/40x40/004080/fff?text=L';" />
     <h1>Guia do Estudante</h1>
     <!-- Botão de Modo Escuro -->
     <button class="theme-toggle-btn" onclick="toggleTheme()">
@@ -25,6 +267,9 @@
       <p style="text-align: center; margin-bottom: 25px; color: var(--color-secundary);">
         Preencha seus dados para começar:
       </p>
+
+      <!-- NOVO: Caixa de Mensagem de Feedback -->
+      <div id="feedback-message" class="feedback-message" style="display: none;"></div>
 
       <label for="nome">Nome Completo:</label>
       <input type="text" id="nome" class="campo" placeholder="Ex: Maria Silva">
@@ -48,6 +293,7 @@
         <option>3º Ano</option>
       </select>
 
+      <!-- BOTÃO DE ENTRADA DO ALUNO (Corrigido para usar a função 'entrar') -->
       <button class="btn" onclick="entrar()" style="margin-top: 20px;">
         ACESSAR O MEU GUIA (ALUNO)
       </button>
@@ -232,6 +478,27 @@
     const STORAGE_AVISOS_KEY = 'guiaEstudante_avisos';
     const SENHA_ADMIN = "1234"; 
 
+    // --- Funções de Feedback de Mensagem (NOVA) ---
+
+    /**
+     * Exibe uma mensagem de feedback para o usuário.
+     * @param {string} mensagem - O texto da mensagem.
+     * @param {'success'|'error'} tipo - O tipo de mensagem para definir a cor.
+     */
+    function mostrarMensagem(mensagem, tipo = 'error') {
+        const msgBox = document.getElementById('feedback-message');
+        if (!msgBox) return; // Garante que o elemento existe
+
+        msgBox.textContent = mensagem;
+        msgBox.style.display = 'block';
+        msgBox.style.backgroundColor = tipo === 'error' ? 'var(--color-alert)' : 'var(--color-success)';
+
+        // Remove a mensagem após 4 segundos
+        setTimeout(() => {
+            msgBox.style.display = 'none';
+        }, 4000);
+    }
+
     // --- Funções de Inicialização e Tema (Modo Escuro Restaurado) ---
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -274,7 +541,7 @@
      * Alterna a visibilidade dos campos de login do administrador.
      */
     function toggleAdminLoginFields(event) {
-        event.preventDefault(); // Impede o comportamento padrão do botão, se houver
+        event.preventDefault(); // Impede o comportamento padrão do botão
         const fields = document.getElementById('admin-login-fields');
         const toggleBtn = document.getElementById('btn-toggle-admin');
         
@@ -299,10 +566,11 @@
             document.getElementById('admin-login-fields').style.display = 'none';
             document.getElementById('btn-toggle-admin').textContent = '⚙️ Acesso Administrativo';
             document.getElementById('btn-toggle-admin').style.background = '#333';
-
-            mudarTela('admin', false);
+            
+            mostrarMensagem('✅ Acesso Admin liberado com sucesso!', 'success');
+            setTimeout(() => mudarTela('admin', false), 500);
         } else {
-            console.error("Senha incorreta. Acesso negado.");
+            mostrarMensagem("❌ Senha incorreta. Acesso negado.", 'error');
             senhaInput.value = '';
         }
     }
@@ -313,6 +581,10 @@
       const telas = document.querySelectorAll('.tela');
       telas.forEach(tela => tela.classList.remove('ativo'));
       document.getElementById(`tela-${telaId}`).classList.add('ativo');
+      
+      // Limpa qualquer mensagem de feedback ao mudar de tela
+      const msgBox = document.getElementById('feedback-message');
+      if(msgBox) msgBox.style.display = 'none';
       
       if (telaId === 'inicial') {
         verificarAlertas();
@@ -325,13 +597,17 @@
       }
     }
 
+    /**
+     * Função corrigida para exibir feedback visual em caso de erro.
+     */
     function entrar() {
       const nome = document.getElementById('nome').value.trim();
       const curso = document.getElementById('curso').value;
       const ano = document.getElementById('ano').value;
       
-      if (!nome || !curso || !ano) {
-        console.error('Por favor, preencha seu nome, curso e ano.');
+      // Validação: verifica se algum campo está vazio (o problema estava aqui, sem feedback visual)
+      if (!nome || !curso || !ano || curso === '' || ano === '') {
+        mostrarMensagem('🚨 Por favor, preencha todos os campos (Nome, Curso e Ano).', 'error');
         return;
       }
       
@@ -340,7 +616,13 @@
       localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(userInfo));
 
       document.getElementById('info-aluno').textContent = `Bem-vindo(a), ${nome} (${ano} - ${curso})`;
-      mudarTela('inicial', false);
+      
+      mostrarMensagem('✅ Login efetuado com sucesso! Redirecionando...', 'success');
+      
+      // Delay para o usuário ver a mensagem de sucesso
+      setTimeout(() => {
+          mudarTela('inicial', false);
+      }, 500);
     }
 
     // --- Funções de Notificação e Datas ---
@@ -432,7 +714,7 @@
         alertaElemento.style.borderColor = 'var(--color-success)';
       } else if (!temAlerta && atividadesPendentes > 0) {
         htmlAlerta = `<h2>👍 Sem Urgência</h2><p>Você tem ${atividadesPendentes} atividade(s) pendente(s), mas sem prazo para os próximos 3 dias.</p>`;
-        alertaElemento.style.borderColor = 'var(--color-secundary)';
+        alertaElemento.style.borderColor = 'var(--color-primary-dark)';
       } else {
         alertaElemento.style.borderColor = 'var(--color-alert)';
       }
@@ -502,9 +784,11 @@
         O Guia do Estudante está mais organizado!`;
         
         console.log(mensagem);
-        // Não usamos 'alert()', então a mensagem é exibida no console e simulamos um feedback visual simples:
+        // Feedback visual simples
         const btn = document.querySelector('#tela-admin .btn[onclick="limparItensAntigos()"]');
         btn.textContent = "🧹 Limpeza Concluída!";
+        mostrarMensagem('🧹 Limpeza Concluída!', 'success');
+        
         setTimeout(() => {
             btn.textContent = "🧹 Limpar Itens Antigos";
         }, 3000);
@@ -538,7 +822,7 @@
       };
 
       if (!novaProva.data || !novaProva.materia || !novaProva.assunto) {
-        console.error('Por favor, preencha todos os campos da prova.');
+        mostrarMensagem('🚨 Por favor, preencha todos os campos da prova.', 'error');
         return;
       }
 
@@ -547,11 +831,12 @@
       salvarProvas(provas);
 
       console.log(`Prova de ${novaProva.materia} em ${novaProva.data} adicionada com sucesso!`);
+      mostrarMensagem(`✅ Prova de ${novaProva.materia} salva!`, 'success');
 
       dataInput.value = '';
       materiaInput.value = '';
       assuntoInput.value = '';
-      mudarTela('admin');
+      setTimeout(() => mudarTela('admin'), 500);
     }
 
     function carregarProvas() {
@@ -604,7 +889,7 @@
         };
 
         if (!novaAtividade.nome || !novaAtividade.materia || !novaAtividade.dataEntrega) {
-            console.error('Por favor, preencha todos os campos da atividade.');
+            mostrarMensagem('🚨 Por favor, preencha todos os campos da atividade.', 'error');
             return;
         }
 
@@ -613,11 +898,12 @@
         salvarAtividades(atividades);
 
         console.log(`Atividade "${novaAtividade.nome}" (${novaAtividade.materia}) cadastrada com sucesso! Data: ${novaAtividade.dataEntrega}`);
+        mostrarMensagem(`✅ Atividade "${novaAtividade.nome}" salva!`, 'success');
 
         nomeInput.value = '';
         materiaInput.value = '';
         dataEntregaInput.value = '';
-        mudarTela('admin');
+        setTimeout(() => mudarTela('admin'), 500);
     }
 
     // --- Funções de Gestão de AVISOS (Professor/Admin) ---
@@ -644,7 +930,7 @@
       };
 
       if (!novoAviso.titulo || !novoAviso.texto) {
-        console.error('Por favor, preencha o título e a mensagem do aviso.');
+        mostrarMensagem('🚨 Por favor, preencha o título e a mensagem do aviso.', 'error');
         return;
       }
 
@@ -653,10 +939,11 @@
       salvarAvisos(avisos);
 
       console.log(`Aviso "${novoAviso.titulo}" publicado com sucesso!`);
+      mostrarMensagem(`✅ Aviso "${novoAviso.titulo}" publicado!`, 'success');
 
       tituloInput.value = '';
       textoInput.value = '';
-      mudarTela('admin');
+      setTimeout(() => mudarTela('admin'), 500);
     }
 
     function carregarAvisos() {
@@ -716,10 +1003,12 @@
     function confirmarEnvio(atividadeId) {
         console.log("Simulação de Envio: Arquivo pronto para upload! Por favor, confirme o envio.");
         
+        // Simulação de confirmação:
         salvarStatusEnvio(atividadeId, 'enviada');
         
-        console.log("Envio confirmado com sucesso!");
+        mostrarMensagem('✅ Atividade marcada como ENVIADA!', 'success');
         carregarAtividades();
+        verificarAlertas(); // Atualiza os alertas
     }
 
 
@@ -746,13 +1035,14 @@
                     <h2 class="tarefa-texto">${a.nome} (${a.materia})</h2>
                     <p>Entrega: <strong>${a.dataEntrega}</strong></p>
                     
-                    <div class="input-group" style="margin-top: 10px;">
-                        <input type="file" class="campo" ${isEnviada ? 'disabled' : ''} style="padding: 5px;">
+                    <div class="input-group" style="margin-top: 10px; display: flex; gap: 10px; align-items: center;">
+                        <!-- O input type=file não salva o arquivo, é apenas visual -->
+                        <input type="file" class="campo" ${isEnviada ? 'disabled' : ''} style="padding: 5px; flex-grow: 1; margin-bottom: 0;">
                         
                         <button class="btn btn-action" 
                                 onclick="confirmarEnvio(${a.id})" 
                                 ${isEnviada ? 'disabled' : ''}
-                                style="width: auto; padding: 8px 10px; margin: 0; background: ${isEnviada ? '#4CAF50' : 'var(--color-primary)'}">
+                                style="width: auto; padding: 8px 10px; margin: 0; background: ${isEnviada ? 'var(--color-success)' : 'var(--color-primary)'}">
                             ${isEnviada ? '✓ Enviada' : 'Confirmar Envio'}
                         </button>
                     </div>
