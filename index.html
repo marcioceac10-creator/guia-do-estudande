@@ -52,7 +52,7 @@
         ACESSAR O MEU GUIA (ALUNO)
       </button>
       
-      <!-- Toggle para Acesso Admin -->
+      <!-- NOVO: Toggle para Acesso Admin -->
       <button class="btn admin-btn" id="btn-toggle-admin" onclick="toggleAdminLoginFields(event)" style="margin-top: 15px; background: #333; color: white;">
         ⚙️ Acesso Administrativo
       </button>
@@ -69,8 +69,6 @@
             ENTRAR NO PAINEL ADMIN
         </button>
       </div>
-      
-      <p id="auth-status" style="margin-top: 15px; font-size: 12px; color: var(--color-text-subtle); text-align: center;"></p>
 
     </section>
     
@@ -100,7 +98,7 @@
       <button class="btn admin-btn" onclick="mudarTela('adicionar-atividade')">📝 Cadastrar Atividade</button>
       <button class="btn admin-btn" onclick="mudarTela('adicionar-aviso')" style="background: linear-gradient(90deg, #10b981, #059669);">📰 Cadastrar Aviso</button>
       
-      <!-- BOTÃO DE LIMPEZA -->
+      <!-- BOTÃO DE LIMPEZA: Cor original mantida (#e67e22) -->
       <button class="btn voltar" onclick="limparItensAntigos()" style="background: #e67e22; border: none; margin-top: 20px;">🧹 Limpar Itens Antigos</button>
       
       <button class="btn voltar" onclick="mudarTela('inicial')" style="margin-top: 5px;">← Voltar ao Menu</button>
@@ -109,9 +107,8 @@
     <!-- FORMULÁRIO DE PROVA -->
     <section class="tela" id="tela-adicionar-prova">
       <h1>Cadastrar Nova Prova</h1>
-      <label for="prova-data">Data (DD/MM/AAAA):</label>
-      <!-- Alterado para suportar AAAA para melhor comparação no Firestore -->
-      <input type="text" id="prova-data" class="campo" placeholder="Ex: 25/11/2025" maxlength="10">
+      <label for="prova-data">Data (DD/MM):</label>
+      <input type="text" id="prova-data" class="campo" placeholder="Ex: 25/11" maxlength="5">
 
       <label for="prova-materia">Matéria:</label>
       <input type="text" id="prova-materia" class="campo" placeholder="Ex: Química">
@@ -132,9 +129,8 @@
       <label for="atividade-materia">Matéria:</label>
       <input type="text" id="atividade-materia" class="campo" placeholder="Ex: Português">
 
-      <label for="atividade-data-entrega">Data de Entrega (DD/MM/AAAA):</label>
-       <!-- Alterado para suportar AAAA para melhor comparação no Firestore -->
-      <input type="text" id="atividade-data-entrega" class="campo" placeholder="Ex: 10/12/2025" maxlength="10">
+      <label for="atividade-data-entrega">Data de Entrega (DD/MM):</label>
+      <input type="text" id="atividade-data-entrega" class="campo" placeholder="Ex: 10/12" maxlength="5">
 
       <button class="btn" onclick="adicionarAtividade()">Salvar Atividade</button>
       <button class="btn voltar" onclick="mudarTela('admin')">← Voltar</button>
@@ -153,12 +149,12 @@
       <button class="btn voltar" onclick="mudarTela('admin')">← Voltar</button>
     </section>
 
-    <!-- TELA DE CALENDÁRIO -->
+    <!-- TELA DE CALENDÁRIO: Conteúdo estático removido -->
     <section class="tela" id="tela-calendario">
       <h1>Calendário de Provas</h1>
       <div id="lista-provas">
         <!-- Provas dinâmicas serão inseridas aqui -->
-        <p class="empty-list-message">Carregando provas...</p>
+        <p class="empty-list-message">Nenhuma prova cadastrada pelo Admin.</p>
       </div>
       <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
     </section>
@@ -168,7 +164,6 @@
       <h1>Mural de Avisos da Escola</h1>
       <div id="lista-avisos">
         <!-- Avisos dinâmicos serão inseridos aqui -->
-        <p class="empty-list-message">Carregando avisos...</p>
       </div>
       <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
     </section>
@@ -179,26 +174,27 @@
       <h1>Atividades para Entregar</h1>
       <div id="lista-atividades">
         <!-- Atividades cadastradas pelo Admin serão inseridas aqui -->
-        <p class="empty-list-message">Carregando atividades...</p>
       </div>
       <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
     </section>
 
-    <!-- TELA DE ASSUNTOS -->
+    <!-- TELA DE ASSUNTOS: Conteúdo estático removido -->
     <section class="tela" id="tela-assuntos">
       <h1>Assuntos por Matéria</h1>
       <p style="margin-bottom: 20px;">Lista de tópicos essenciais para cada disciplina. Utilize como guia para revisões.</p>
       <ul id="lista-assuntos">
+        <!-- Assuntos dinâmicos (mockados ou reais) serão inseridos aqui -->
         <p class="empty-list-message">Conteúdo de Assuntos será cadastrado pelo Admin em uma futura atualização.</p>
       </ul>
       <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
     </section>
 
-    <!-- TELA DE RECURSOS DE ESTUDO -->
+    <!-- TELA DE RECURSOS DE ESTUDO: Conteúdo estático removido -->
     <section class="tela" id="tela-recursos">
       <h1>📚 Recursos de Estudo</h1>
       <p style="margin-bottom: 20px;">Materiais de apoio e links importantes fornecidos pelos professores.</p>
       <ul id="lista-recursos">
+        <!-- Recursos dinâmicos (mockados ou reais) serão inseridos aqui -->
         <p class="empty-list-message">Nenhum link ou material de apoio cadastrado.</p>
       </ul>
       <button class="btn voltar" onclick="mudarTela('inicial')">← Voltar</button>
@@ -218,6 +214,7 @@
 
       <h2 style="margin-top: 20px;">Professores</h2>
       <ul id="lista-professores">
+        <!-- Professores dinâmicos (mockados ou reais) serão inseridos aqui -->
         <p class="empty-list-message">Nenhum professor cadastrado para este curso/ano.</p>
       </ul>
 
@@ -225,139 +222,21 @@
     </section>
   </main>
 
-  <script type="module">
-    // --- IMPORTAÇÕES DO FIREBASE (MANDATÓRIO) ---
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { 
-        getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, 
-        setPersistence, browserLocalPersistence
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { 
-        getFirestore, doc, setDoc, addDoc, onSnapshot, collection, query, orderBy, 
-        deleteDoc, getDocs, where, limit, runTransaction, Timestamp, 
-        setLogLevel // Adicionado para logs de debug
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    // --- VARIÁVEIS GLOBAIS DE AMBIENTE E CONFIGURAÇÃO ---
-    const SENHA_ADMIN = "1234"; 
+  <script>
+    // --- Configurações e Chaves de Armazenamento ---
+    const STORAGE_PROVAS_KEY = 'guiaEstudante_provas';
+    const STORAGE_ATIVIDADES_KEY = 'guiaEstudante_atividades';
+    const STORAGE_ENVIOS_KEY = 'guiaEstudante_envios';
     const STORAGE_USER_KEY = 'guiaEstudante_user';
     const STORAGE_THEME_KEY = 'guiaEstudante_theme';
-    
-    // Configurações e Instâncias do Firebase
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-    const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-    
-    let app, db, auth;
-    let userId = null; // ID do usuário autenticado (UID)
-    let isAuthReady = false; // Flag para garantir que o Firestore só comece a ouvir depois da autenticação
+    const STORAGE_AVISOS_KEY = 'guiaEstudante_avisos';
+    const SENHA_ADMIN = "1234"; 
 
-    // --- Caminhos do Firestore (Público para dados compartilhados da escola) ---
-    const getCollectionPath = (collectionName) => 
-      `/artifacts/${appId}/public/data/${collectionName}`;
-    
-    const COLLECTION_PROVAS = getCollectionPath('provas');
-    const COLLECTION_ATIVIDADES = getCollectionPath('atividades');
-    const COLLECTION_AVISOS = getCollectionPath('avisos');
-    const COLLECTION_ENVIOS = getCollectionPath('envios'); // Status de envio por aluno
-
-    // --- Inicialização do Firebase ---
-    async function initializeFirebase() {
-        if (Object.keys(firebaseConfig).length === 0) {
-            console.error("Firebase config não encontrada. O aplicativo será executado sem persistência.");
-            return;
-        }
-
-        try {
-            // setLogLevel('Debug'); // Ativar logs de debug
-            app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-
-            // Persistência local para manter o estado do usuário
-            await setPersistence(auth, browserLocalPersistence);
-
-            // Tenta logar com o token customizado
-            if (initialAuthToken) {
-                await signInWithCustomToken(auth, initialAuthToken);
-            } else {
-                // Caso contrário, usa login anônimo
-                await signInAnonymously(auth);
-            }
-            
-            // Listener de estado de autenticação
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    userId = user.uid;
-                    isAuthReady = true;
-                    document.getElementById('auth-status').textContent = `Autenticado. UID: ${userId}`;
-                    
-                    // Se o usuário já está logado no localStorage, inicia a tela
-                    const userInfo = JSON.parse(localStorage.getItem(STORAGE_USER_KEY));
-                    if (userInfo) {
-                        loadUserInfo(userInfo);
-                        startListeners(); // Inicia os listeners do Firestore
-                    }
-                } else {
-                    isAuthReady = false;
-                    document.getElementById('auth-status').textContent = 'Aguardando autenticação...';
-                }
-            });
-
-        } catch (error) {
-            console.error("Erro ao inicializar Firebase ou autenticar:", error);
-            document.getElementById('auth-status').textContent = `Erro de Autenticação. Recarregue.`;
-        }
-    }
-    
-    // --- Listener de Dados (Real-time) ---
-    let unsubscribeProvas;
-    let unsubscribeAtividades;
-    let unsubscribeAvisos;
-    
-    function startListeners() {
-        if (!isAuthReady || !db) return;
-
-        // Listener para Provas (Carregado na tela inicial, filtrado na tela calendário)
-        const qProvas = query(collection(db, COLLECTION_PROVAS), orderBy('timestamp', 'asc'));
-        unsubscribeProvas = onSnapshot(qProvas, (snapshot) => {
-            const provas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            window.provasData = provas; // Armazena globalmente para acesso fácil
-            if (document.querySelector('#tela-calendario').classList.contains('ativo')) {
-                carregarProvas();
-            }
-            verificarAlertas();
-        }, error => console.error("Erro ao carregar provas:", error));
-
-        // Listener para Atividades
-        const qAtividades = query(collection(db, COLLECTION_ATIVIDADES), orderBy('timestamp', 'asc'));
-        unsubscribeAtividades = onSnapshot(qAtividades, (snapshot) => {
-            const atividades = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            window.atividadesData = atividades; // Armazena globalmente para acesso fácil
-            if (document.querySelector('#tela-atividades').classList.contains('ativo')) {
-                carregarAtividades();
-            }
-            verificarAlertas();
-        }, error => console.error("Erro ao carregar atividades:", error));
-
-        // Listener para Avisos
-        const qAvisos = query(collection(db, COLLECTION_AVISOS), orderBy('timestamp', 'desc'), limit(50));
-        unsubscribeAvisos = onSnapshot(qAvisos, (snapshot) => {
-            const avisos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            window.avisosData = avisos; // Armazena globalmente para acesso fácil
-            if (document.querySelector('#tela-avisos').classList.contains('ativo')) {
-                carregarAvisos();
-            }
-        }, error => console.error("Erro ao carregar avisos:", error));
-    }
-
-
-    // --- Funções de Inicialização e Tema ---
+    // --- Funções de Inicialização e Tema (Modo Escuro Restaurado) ---
 
     document.addEventListener('DOMContentLoaded', () => {
         loadTheme();
-        initializeFirebase(); // Inicia o Firebase na carga da página
-        // O loadUserInfo e startListeners serão chamados após a autenticação
+        loadUserInfo();
     });
 
     function loadTheme() {
@@ -374,20 +253,28 @@
         document.getElementById('theme-icon').textContent = newTheme === 'dark' ? '☀️' : '🌙';
     }
     
-    function loadUserInfo(userInfo) {
-         document.getElementById('info-aluno').textContent = `Bem-vindo(a), ${userInfo.nome} (${userInfo.ano} - ${userInfo.curso})`;
-         document.getElementById('nome').value = userInfo.nome;
-         document.getElementById('curso').value = userInfo.curso;
-         document.getElementById('ano').value = userInfo.ano;
-         mudarTela('inicial', false);
-         verificarAlertas();
+    function loadUserInfo() {
+        const userInfo = JSON.parse(localStorage.getItem(STORAGE_USER_KEY));
+        if (userInfo) {
+             document.getElementById('info-aluno').textContent = `Bem-vindo(a), ${userInfo.nome} (${userInfo.ano} - ${userInfo.curso})`;
+             document.getElementById('nome').value = userInfo.nome;
+             document.getElementById('curso').value = userInfo.curso;
+             document.getElementById('ano').value = userInfo.ano;
+             mudarTela('inicial', false);
+             verificarAlertas();
+        } else {
+             mudarTela('selecao', false);
+        }
     }
 
 
-    // --- Funções de Navegação e Autenticação (Mantidas) ---
+    // --- Funções de Navegação e Autenticação ---
 
-    window.toggleAdminLoginFields = function(event) {
-        event.preventDefault(); 
+    /**
+     * Alterna a visibilidade dos campos de login do administrador.
+     */
+    function toggleAdminLoginFields(event) {
+        event.preventDefault(); // Impede o comportamento padrão do botão, se houver
         const fields = document.getElementById('admin-login-fields');
         const toggleBtn = document.getElementById('btn-toggle-admin');
         
@@ -402,12 +289,13 @@
         }
     }
 
-    window.logarAdmin = function() {
+    function logarAdmin() {
         const senhaInput = document.getElementById('senha-admin');
         const senha = senhaInput.value;
 
         if (senha === SENHA_ADMIN) {
             senhaInput.value = '';
+            // Oculta os campos de login admin após o sucesso
             document.getElementById('admin-login-fields').style.display = 'none';
             document.getElementById('btn-toggle-admin').textContent = '⚙️ Acesso Administrativo';
             document.getElementById('btn-toggle-admin').style.background = '#333';
@@ -420,7 +308,8 @@
     }
 
 
-    window.mudarTela = function(telaId, checkAuth = true) {
+    function mudarTela(telaId, checkAuth = true) {
+      
       const telas = document.querySelectorAll('.tela');
       telas.forEach(tela => tela.classList.remove('ativo'));
       document.getElementById(`tela-${telaId}`).classList.add('ativo');
@@ -433,12 +322,10 @@
         carregarAtividades();
       } else if (telaId === 'avisos') { 
         carregarAvisos();
-      } else if (telaId === 'selecao') {
-        // Não faz nada no localStorage, apenas troca a tela
       }
     }
 
-    window.entrar = function() {
+    function entrar() {
       const nome = document.getElementById('nome').value.trim();
       const curso = document.getElementById('curso').value;
       const ano = document.getElementById('ano').value;
@@ -448,37 +335,36 @@
         return;
       }
       
+      // Salva os dados do usuário
       const userInfo = { nome, curso, ano };
       localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(userInfo));
 
-      loadUserInfo(userInfo);
+      document.getElementById('info-aluno').textContent = `Bem-vindo(a), ${nome} (${ano} - ${curso})`;
+      mudarTela('inicial', false);
     }
 
-    // --- Funções de Notificação e Datas (Adaptadas para AAAA) ---
-    
-    /** * Converte data DD/MM/AAAA para um Timestamp Unix.
-     * @param {string} dataStr - Data no formato DD/MM/AAAA.
+    // --- Funções de Notificação e Datas ---
+
+    /** * Converte data DD/MM para um timestamp, ajustando para o ano futuro se a data já passou.
+     * @param {string} dataStr - Data no formato DD/MM.
      * @returns {number|null} Timestamp da data alvo à meia-noite, ou null se formato inválido.
      */
     function dataParaTimestamp(dataStr) {
       const partes = dataStr.split('/');
-      if (partes.length !== 3) return null;
+      if (partes.length !== 2) return null;
       const dia = parseInt(partes[0]);
       const mes = parseInt(partes[1]) - 1; // Mês é zero-based (0=Jan)
-      const ano = parseInt(partes[2]);
-
-      // Verifica se a data é válida
-      if (isNaN(dia) || isNaN(mes) || isNaN(ano)) return null;
       
-      const dataAlvo = new Date(ano, mes, dia);
-      dataAlvo.setHours(0, 0, 0, 0); // Define para meia-noite
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
 
-      // Verifica se a data é razoável (por exemplo, após 2024 e menos de 10 anos futuro)
-      if (dataAlvo.getFullYear() < 2024 || dataAlvo.getFullYear() > new Date().getFullYear() + 10) {
-          console.warn(`Data ${dataStr} parece inválida ou muito distante.`);
-          return null;
+      const dataAlvo = new Date(hoje.getFullYear(), mes, dia);
+      dataAlvo.setHours(0, 0, 0, 0);
+
+      // Se a data alvo já passou no ano atual, ajusta para o próximo ano.
+      if (dataAlvo.getTime() < hoje.getTime()) {
+          dataAlvo.setFullYear(dataAlvo.getFullYear() + 1);
       }
-
       return dataAlvo.getTime();
     }
     
@@ -488,13 +374,7 @@
         return hoje.getTime();
     }
 
-    window.verificarAlertas = async function() {
-      if (!isAuthReady || !window.provasData || !window.atividadesData) {
-          // Espera os dados serem carregados pelos listeners
-          document.getElementById('alertas-proximos').style.display = 'none';
-          return;
-      }
-        
+    function verificarAlertas() {
       const hojeTs = getTodayTimestamp();
       
       // Intervalo de alerta: até 3 dias a partir de hoje
@@ -506,11 +386,9 @@
       let atividadesProximas = 0;
       let atividadesPendentes = 0;
       
-      const provas = window.provasData || [];
-      const atividades = window.atividadesData || [];
-      const statusEnvio = await obterStatusEnvio(); // Busca status de envio do Firestore
-
       // 1. Provas
+      const provas = obterProvasSalvas();
+
       provas.forEach(p => {
         const provaTs = dataParaTimestamp(p.data);
         if (provaTs && provaTs >= hojeTs && provaTs < limiteAlertaTs) {
@@ -519,9 +397,11 @@
       });
       
       // 2. Atividades
+      const atividades = obterAtividadesSalvas();
+      const statusEnvio = obterStatusEnvio();
+
       atividades.forEach(a => {
-        // Verifica se a atividade foi enviada
-        if (!statusEnvio[a.id] || statusEnvio[a.id].status !== 'enviada') {
+        if (statusEnvio[a.id] !== 'enviada') {
             atividadesPendentes++;
             
             const atividadeTs = dataParaTimestamp(a.dataEntrega);
@@ -533,24 +413,24 @@
 
       const alertaElemento = document.getElementById('alertas-proximos');
       let htmlAlerta = '<h2>🚨 Alertas de Organização</h2>';
-      let temAlertaUrgente = false;
+      let temAlerta = false;
 
       if (provasProximas > 0) {
         htmlAlerta += `<p>• 📅 ${provasProximas} Prova(s) marcada(s) para os próximos 3 dias. Estude!</p>`;
-        temAlertaUrgente = true;
+        temAlerta = true;
       }
       if (atividadesProximas > 0) {
         htmlAlerta += `<p>• 📝 ${atividadesProximas} Atividade(s) com entrega nos próximos 3 dias.</p>`;
-        temAlertaUrgente = true;
+        temAlerta = true;
       }
       if (atividadesPendentes > 0) {
         htmlAlerta += `<p>• ⏳ Você tem ${atividadesPendentes} atividade(s) pendente(s) no total.</p>`;
       }
       
-      if (!temAlertaUrgente && atividadesPendentes === 0) {
+      if (!temAlerta && atividadesPendentes === 0) {
         htmlAlerta = '<h2>✅ Tudo em Ordem!</h2><p>Nenhuma prova ou entrega urgente para os próximos dias.</p>';
         alertaElemento.style.borderColor = 'var(--color-success)';
-      } else if (!temAlertaUrgente && atividadesPendentes > 0) {
+      } else if (!temAlerta && atividadesPendentes > 0) {
         htmlAlerta = `<h2>👍 Sem Urgência</h2><p>Você tem ${atividadesPendentes} atividade(s) pendente(s), mas sem prazo para os próximos 3 dias.</p>`;
         alertaElemento.style.borderColor = 'var(--color-secundary)';
       } else {
@@ -562,228 +442,226 @@
     }
 
 
-    // --- FUNÇÃO DE LIMPEZA GERAL (FIREBASE) ---
+    // --- FUNÇÃO DE LIMPEZA GERAL (NOVA) ---
 
-    window.limparItensAntigos = async function() {
-        if (!isAuthReady || !db) return console.error("Firebase não está pronto.");
-        
+    function limparItensAntigos() {
         const hojeTs = getTodayTimestamp();
-        const batch = db.batch();
         let provasRemovidas = 0;
         let atividadesRemovidas = 0;
         let avisosRemovidos = 0;
         
-        try {
-            // 1. Limpa Provas Passadas
-            const provasSnapshot = await getDocs(collection(db, COLLECTION_PROVAS));
-            provasSnapshot.forEach(doc => {
-                const p = doc.data();
-                const provaTs = dataParaTimestamp(p.data);
-                if (provaTs !== null && provaTs < hojeTs) {
-                    batch.delete(doc.ref);
-                    provasRemovidas++;
-                }
-            });
+        // 1. Limpa Provas Passadas
+        let provas = obterProvasSalvas();
+        const provasAtuais = provas.filter(p => {
+            const provaTs = dataParaTimestamp(p.data);
+            // Mantém se a data for hoje ou no futuro
+            return provaTs !== null && provaTs >= hojeTs; 
+        });
+        provasRemovidas = provas.length - provasAtuais.length;
+        salvarProvas(provasAtuais);
+        
+        // 2. Limpa Atividades Passadas (independentemente do status de envio)
+        let atividades = obterAtividadesSalvas();
+        const atividadesAtuais = atividades.filter(a => {
+            const atividadeTs = dataParaTimestamp(a.dataEntrega);
+            // Mantém se a data for hoje ou no futuro
+            return atividadeTs !== null && atividadeTs >= hojeTs;
+        });
+        atividadesRemovidas = atividades.length - atividadesAtuais.length;
+        salvarAtividades(atividadesAtuais);
+        
+        // 3. Limpa Avisos com mais de 30 dias
+        let avisos = obterAvisosSalvos();
+        const limiteDias = 30; // Avisos mais antigos que 30 dias serão removidos
+        
+        const avisosAtuais = avisos.filter(a => {
+            // A data do aviso é salva no formato DD/MM/AAAA. Vamos parsear.
+            const partes = a.data.split('/');
+            if (partes.length !== 3) return true; // Mantém se o formato estiver errado
             
-            // 2. Limpa Atividades Passadas
-            const atividadesSnapshot = await getDocs(collection(db, COLLECTION_ATIVIDADES));
-            atividadesSnapshot.forEach(doc => {
-                const a = doc.data();
-                const atividadeTs = dataParaTimestamp(a.dataEntrega);
-                if (atividadeTs !== null && atividadeTs < hojeTs) {
-                    batch.delete(doc.ref);
-                    atividadesRemovidas++;
-                }
-            });
+            const dia = parseInt(partes[0]);
+            const mes = parseInt(partes[1]) - 1; 
+            const ano = parseInt(partes[2]);
+            const avisoDate = new Date(ano, mes, dia);
+            
+            const diferencaEmDias = (hojeTs - avisoDate.getTime()) / (1000 * 60 * 60 * 24);
 
-            // 3. Limpa Avisos com mais de 30 dias (usando a data de criação no Firestore)
-            const limite30Dias = Timestamp.fromDate(new Date(hojeTs - (30 * 24 * 60 * 60 * 1000)));
-            const qAvisosAntigos = query(collection(db, COLLECTION_AVISOS), where('timestamp', '<', limite30Dias));
-            const avisosSnapshot = await getDocs(qAvisosAntigos);
-            avisosSnapshot.forEach(doc => {
-                batch.delete(doc.ref);
-                avisosRemovidos++;
-            });
+            return diferencaEmDias <= limiteDias;
+        });
 
-            await batch.commit();
+        avisosRemovidos = avisos.length - avisosAtuais.length;
+        salvarAvisos(avisosAtuais);
 
-            let mensagem = `Limpeza concluída!
-            
-            - ${provasRemovidas} prova(s) passada(s) removida(s).
-            - ${atividadesRemovidas} atividade(s) passada(s) removida(s).
-            - ${avisosRemovidos} aviso(s) com mais de 30 dias removido(s).
-            
-            O Guia do Estudante está mais organizado! (Os dados serão atualizados em segundos)`;
-            
-            console.log(mensagem);
-            
-            const btn = document.querySelector('#tela-admin .btn[onclick="limparItensAntigos()"]');
-            btn.textContent = "🧹 Limpeza Concluída!";
-            setTimeout(() => {
-                btn.textContent = "🧹 Limpar Itens Antigos";
-            }, 3000);
 
-            mudarTela('admin');
-        } catch (error) {
-            console.error("Erro ao limpar itens antigos no Firebase:", error);
-        }
+        let mensagem = `Limpeza concluída!
+        
+        - ${provasRemovidas} prova(s) passada(s) removida(s).
+        - ${atividadesRemovidas} atividade(s) passada(s) removida(s).
+        - ${avisosRemovidos} aviso(s) com mais de 30 dias removido(s).
+        
+        O Guia do Estudante está mais organizado!`;
+        
+        console.log(mensagem);
+        // Não usamos 'alert()', então a mensagem é exibida no console e simulamos um feedback visual simples:
+        const btn = document.querySelector('#tela-admin .btn[onclick="limparItensAntigos()"]');
+        btn.textContent = "🧹 Limpeza Concluída!";
+        setTimeout(() => {
+            btn.textContent = "🧹 Limpar Itens Antigos";
+        }, 3000);
+
+        mudarTela('admin');
+        verificarAlertas();
     }
 
 
-    // --- Funções de Gestão de Provas (Admin/Aluno - FIREBASE) ---
+    // --- Funções de Gestão de Provas (Admin/Aluno) ---
 
-    window.adicionarProva = async function() {
-      if (!isAuthReady || !db) return console.error("Firebase não está pronto.");
-        
+    function obterProvasSalvas() {
+      const dados = localStorage.getItem(STORAGE_PROVAS_KEY);
+      return dados ? JSON.parse(dados) : [];
+    }
+
+    function salvarProvas(provas) {
+      localStorage.setItem(STORAGE_PROVAS_KEY, JSON.stringify(provas));
+    }
+
+    function adicionarProva() {
       const dataInput = document.getElementById('prova-data');
       const materiaInput = document.getElementById('prova-materia');
       const assuntoInput = document.getElementById('prova-assunto');
 
-      const data = dataInput.value.trim();
-      const materia = materiaInput.value.trim();
-      const assunto = assuntoInput.value.trim();
-      
-      if (!data || !materia || !assunto) {
+      const novaProva = {
+        id: Date.now(),
+        data: dataInput.value.trim(),
+        materia: materiaInput.value.trim(),
+        assunto: assuntoInput.value.trim()
+      };
+
+      if (!novaProva.data || !novaProva.materia || !novaProva.assunto) {
         console.error('Por favor, preencha todos os campos da prova.');
         return;
       }
-      
-      if (dataParaTimestamp(data) === null) {
-          console.error('Formato de data inválido. Use DD/MM/AAAA.');
-          return;
-      }
 
-      try {
-          await addDoc(collection(db, COLLECTION_PROVAS), {
-            data,
-            materia,
-            assunto,
-            timestamp: Timestamp.now()
-          });
+      const provas = obterProvasSalvas();
+      provas.push(novaProva);
+      salvarProvas(provas);
 
-          console.log(`Prova de ${materia} em ${data} adicionada com sucesso!`);
+      console.log(`Prova de ${novaProva.materia} em ${novaProva.data} adicionada com sucesso!`);
 
-          dataInput.value = '';
-          materiaInput.value = '';
-          assuntoInput.value = '';
-          mudarTela('admin');
-          
-      } catch (error) {
-          console.error("Erro ao adicionar prova:", error);
-      }
+      dataInput.value = '';
+      materiaInput.value = '';
+      assuntoInput.value = '';
+      mudarTela('admin');
     }
 
-    window.carregarProvas = function() {
+    function carregarProvas() {
       const listaProvasElemento = document.getElementById('lista-provas');
-      const provas = window.provasData || []; // Usa os dados carregados pelo listener
+      const provas = obterProvasSalvas();
       
-      if (provas.length === 0) {
-        listaProvasElemento.innerHTML = `<p class="empty-list-message">Nenhuma prova cadastrada pelo Admin.</p>`;
-        return;
-      }
-      
-      const hojeTs = getTodayTimestamp();
+      let htmlProvas = '';
 
-      // Filtra e ordena as provas futuras (já estão ordenadas por data pelo query)
-      const provasFuturas = provas.filter(p => dataParaTimestamp(p.data) !== null && dataParaTimestamp(p.data) >= hojeTs);
-      
-      if (provasFuturas.length === 0) {
-        listaProvasElemento.innerHTML = `<p class="empty-list-message">Nenhuma prova futura cadastrada.</p>`;
-        return;
-      }
+      // Adiciona as provas salvas dinamicamente
+      if (provas.length > 0) {
+        // Ordena as provas por data (opcional, mas recomendado)
+        provas.sort((a, b) => dataParaTimestamp(a.data) - dataParaTimestamp(b.data));
 
-      let htmlProvas = provasFuturas.map(prova => `
-          <div class="card">
-            <h2>📅 ${prova.data} - ${prova.materia}</h2>
-            <p>Assunto: ${prova.assunto}</p>
-          </div>
-        `).join('');
+        provas.forEach(prova => {
+          htmlProvas += `
+            <div class="card">
+              <h2>${prova.data} - ${prova.materia}</h2>
+              <p>Assunto: ${prova.assunto}</p>
+            </div>
+          `;
+        });
+      } else {
+        htmlProvas = `<p class="empty-list-message">Nenhuma prova cadastrada pelo Admin.</p>`;
+      }
       
       listaProvasElemento.innerHTML = htmlProvas;
     }
 
-    // --- Funções de Gestão de ATIVIDADES (Professor/Admin - FIREBASE) ---
+    // --- Funções de Gestão de ATIVIDADES (Professor/Admin) ---
 
-    window.adicionarAtividade = async function() {
-        if (!isAuthReady || !db) return console.error("Firebase não está pronto.");
-        
+    function obterAtividadesSalvas() {
+        const dados = localStorage.getItem(STORAGE_ATIVIDADES_KEY);
+        return dados ? JSON.parse(dados) : [];
+    }
+    
+    function salvarAtividades(atividades) {
+        localStorage.setItem(STORAGE_ATIVIDADES_KEY, JSON.stringify(atividades));
+    }
+
+    function adicionarAtividade() {
         const nomeInput = document.getElementById('atividade-nome');
         const materiaInput = document.getElementById('atividade-materia');
         const dataEntregaInput = document.getElementById('atividade-data-entrega');
 
-        const nome = nomeInput.value.trim();
-        const materia = materiaInput.value.trim();
-        const dataEntrega = dataEntregaInput.value.trim();
+        const novaAtividade = {
+            id: Date.now(),
+            nome: nomeInput.value.trim(),
+            materia: materiaInput.value.trim(),
+            dataEntrega: dataEntregaInput.value.trim()
+        };
 
-        if (!nome || !materia || !dataEntrega) {
+        if (!novaAtividade.nome || !novaAtividade.materia || !novaAtividade.dataEntrega) {
             console.error('Por favor, preencha todos os campos da atividade.');
             return;
         }
-        
-        if (dataParaTimestamp(dataEntrega) === null) {
-          console.error('Formato de data inválido. Use DD/MM/AAAA.');
-          return;
-        }
 
-        try {
-            await addDoc(collection(db, COLLECTION_ATIVIDADES), {
-                nome,
-                materia,
-                dataEntrega,
-                timestamp: Timestamp.now()
-            });
+        const atividades = obterAtividadesSalvas();
+        atividades.push(novaAtividade);
+        salvarAtividades(atividades);
 
-            console.log(`Atividade "${nome}" cadastrada com sucesso!`);
+        console.log(`Atividade "${novaAtividade.nome}" (${novaAtividade.materia}) cadastrada com sucesso! Data: ${novaAtividade.dataEntrega}`);
 
-            nomeInput.value = '';
-            materiaInput.value = '';
-            dataEntregaInput.value = '';
-            mudarTela('admin');
-            
-        } catch (error) {
-            console.error("Erro ao adicionar atividade:", error);
-        }
+        nomeInput.value = '';
+        materiaInput.value = '';
+        dataEntregaInput.value = '';
+        mudarTela('admin');
     }
-    
-    // --- Funções de Gestão de AVISOS (Professor/Admin - FIREBASE) ---
 
-    window.adicionarAviso = async function() {
-      if (!isAuthReady || !db) return console.error("Firebase não está pronto.");
-        
+    // --- Funções de Gestão de AVISOS (Professor/Admin) ---
+
+    function obterAvisosSalvos() {
+      const dados = localStorage.getItem(STORAGE_AVISOS_KEY);
+      return dados ? JSON.parse(dados) : [];
+    }
+
+    function salvarAvisos(avisos) {
+      localStorage.setItem(STORAGE_AVISOS_KEY, JSON.stringify(avisos));
+    }
+
+    function adicionarAviso() {
       const tituloInput = document.getElementById('aviso-titulo');
       const textoInput = document.getElementById('aviso-texto');
       
-      const titulo = tituloInput.value.trim();
-      const texto = textoInput.value.trim();
+      const novoAviso = {
+        id: Date.now(),
+        titulo: tituloInput.value.trim(),
+        texto: textoInput.value.trim(),
+        // Salva a data de hoje no formato DD/MM/AAAA para comparação de limpeza
+        data: new Date().toLocaleDateString('pt-BR') 
+      };
 
-      if (!titulo || !texto) {
+      if (!novoAviso.titulo || !novoAviso.texto) {
         console.error('Por favor, preencha o título e a mensagem do aviso.');
         return;
       }
 
-      try {
-          await addDoc(collection(db, COLLECTION_AVISOS), {
-            titulo,
-            texto,
-            // A data de publicação é inferida do timestamp para fins de exibição
-            data: new Date().toLocaleDateString('pt-BR'),
-            timestamp: Timestamp.now()
-          });
+      const avisos = obterAvisosSalvos();
+      avisos.unshift(novoAviso); // Adiciona no início para mostrar o mais novo primeiro
+      salvarAvisos(avisos);
 
-          console.log(`Aviso "${titulo}" publicado com sucesso!`);
+      console.log(`Aviso "${novoAviso.titulo}" publicado com sucesso!`);
 
-          tituloInput.value = '';
-          textoInput.value = '';
-          mudarTela('admin');
-          
-      } catch (error) {
-          console.error("Erro ao adicionar aviso:", error);
-      }
+      tituloInput.value = '';
+      textoInput.value = '';
+      mudarTela('admin');
     }
 
-    window.carregarAvisos = function() {
+    function carregarAvisos() {
       const listaAvisosElemento = document.getElementById('lista-avisos');
-      const avisos = window.avisosData || []; // Usa os dados carregados pelo listener
+      const avisos = obterAvisosSalvos();
 
       if (avisos.length === 0) {
         listaAvisosElemento.innerHTML = '<p class="empty-list-message" style="color: var(--color-text-main);">Nenhum aviso geral publicado pela escola até o momento.</p>';
@@ -804,93 +682,64 @@
     }
 
 
-    // --- Funções de ENVIOS do Aluno (FIREBASE) ---
+    // --- Funções de ENVIOS do Aluno ---
 
-    /**
-     * Obtém o status de envio do aluno atual para todas as atividades.
-     * @returns {Object} Mapa de {atividadeId: {status: 'enviada', timestamp: ...}}
-     */
-    async function obterStatusEnvio() {
-        if (!isAuthReady || !db || !userId) return {};
+    function obterStatusEnvio() {
+        const userInfo = JSON.parse(localStorage.getItem(STORAGE_USER_KEY));
+        if (!userInfo || !userInfo.nome) return {};
         
-        // A chave de envio é o UID do usuário (aluno)
-        const docRef = doc(db, COLLECTION_ENVIOS, userId);
-        
-        try {
-            const docSnap = await db.getDoc(docRef);
-            if (docSnap.exists()) {
-                // Retorna o mapa de atividades (ex: { 'id1': { status: 'enviada', ... } })
-                return docSnap.data().atividades || {};
-            }
-            return {};
-        } catch (error) {
-            console.error("Erro ao buscar status de envio:", error);
-            return {};
-        }
+        const envios = localStorage.getItem(STORAGE_ENVIOS_KEY);
+        const allEnvios = envios ? JSON.parse(envios) : {};
+
+        return allEnvios[userInfo.nome] || {};
     }
 
-    /**
-     * Salva o status de envio de uma atividade específica.
-     */
-    async function salvarStatusEnvio(atividadeId, status) {
-        if (!isAuthReady || !db || !userId) {
-             console.error('Erro: Firebase ou usuário não identificados para salvar o envio.');
+    function salvarStatusEnvio(atividadeId, status) {
+        const userInfo = JSON.parse(localStorage.getItem(STORAGE_USER_KEY));
+        if (!userInfo || !userInfo.nome) {
+             console.error('Erro: Usuário não identificado para salvar o envio.');
              return;
         }
 
-        const docRef = doc(db, COLLECTION_ENVIOS, userId);
+        const envios = localStorage.getItem(STORAGE_ENVIOS_KEY);
+        const allEnvios = envios ? JSON.parse(envios) : {};
         
-        try {
-            // Usa runTransaction para garantir atomicidade ao atualizar um subcampo
-            await runTransaction(db, async (transaction) => {
-                const docSnap = await transaction.get(docRef);
-                const envios = docSnap.exists() ? docSnap.data().atividades || {} : {};
-                
-                envios[atividadeId] = {
-                    status: status,
-                    timestamp: Timestamp.now()
-                };
-
-                transaction.set(docRef, { atividades: envios });
-            });
-            console.log("Status de envio atualizado com sucesso!");
-        } catch (error) {
-            console.error("Erro ao salvar status de envio:", error);
+        if (!allEnvios[userInfo.nome]) {
+             allEnvios[userInfo.nome] = {};
         }
+
+        allEnvios[userInfo.nome][atividadeId] = status;
+        
+        localStorage.setItem(STORAGE_ENVIOS_KEY, JSON.stringify(allEnvios));
     }
     
-    window.confirmarEnvio = async function(atividadeId) {
-        await salvarStatusEnvio(atividadeId, 'enviada');
-        // A atualização da tela será tratada pelo listener na próxima linha (se o listener estivesse aqui)
-        // Como o listener já está ativo, ele forçará o recarregamento.
-        carregarAtividades(); 
+    function confirmarEnvio(atividadeId) {
+        console.log("Simulação de Envio: Arquivo pronto para upload! Por favor, confirme o envio.");
+        
+        salvarStatusEnvio(atividadeId, 'enviada');
+        
+        console.log("Envio confirmado com sucesso!");
+        carregarAtividades();
     }
 
 
-    // --- Funções de Exibição de Atividades (Aluno - FIREBASE) ---
+    // --- Funções de Exibição de Atividades (Aluno) ---
 
-    window.carregarAtividades = async function() {
+    function carregarAtividades() {
         const listaAtividadesElemento = document.getElementById('lista-atividades');
-        const atividades = window.atividadesData || []; // Usa dados do listener
+        const atividades = obterAtividadesSalvas();
+        const statusEnvio = obterStatusEnvio();
         
         if (atividades.length === 0) {
             listaAtividadesElemento.innerHTML = '<p class="empty-list-message">Nenhuma atividade cadastrada pelo professor.</p>';
             return;
         }
 
-        const statusEnvio = await obterStatusEnvio(); // Busca status de envio atualizado
-        const hojeTs = getTodayTimestamp();
-        
-        // Filtra as atividades futuras (ou de hoje)
-        const atividadesFuturas = atividades.filter(a => dataParaTimestamp(a.dataEntrega) !== null && dataParaTimestamp(a.dataEntrega) >= hojeTs);
-        
-        if (atividadesFuturas.length === 0) {
-            listaAtividadesElemento.innerHTML = '<p class="empty-list-message">Nenhuma atividade pendente ou futura.</p>';
-            return;
-        }
+        // Ordena as atividades por data de entrega (próximas primeiro)
+        atividades.sort((a, b) => dataParaTimestamp(a.dataEntrega) - dataParaTimestamp(b.dataEntrega));
 
-        let htmlAtividades = atividadesFuturas.map(a => {
-            const isEnviada = statusEnvio[a.id] && statusEnvio[a.id].status === 'enviada';
+        let htmlAtividades = atividades.map(a => {
+            const isEnviada = statusEnvio[a.id] === 'enviada';
             
             return `
                 <div class="card ${isEnviada ? 'enviada' : ''}">
@@ -898,11 +747,10 @@
                     <p>Entrega: <strong>${a.dataEntrega}</strong></p>
                     
                     <div class="input-group" style="margin-top: 10px;">
-                        <!-- O input type="file" é apenas um placeholder visual neste ambiente de iframe -->
                         <input type="file" class="campo" ${isEnviada ? 'disabled' : ''} style="padding: 5px;">
                         
                         <button class="btn btn-action" 
-                                onclick="confirmarEnvio('${a.id}')" 
+                                onclick="confirmarEnvio(${a.id})" 
                                 ${isEnviada ? 'disabled' : ''}
                                 style="width: auto; padding: 8px 10px; margin: 0; background: ${isEnviada ? '#4CAF50' : 'var(--color-primary)'}">
                             ${isEnviada ? '✓ Enviada' : 'Confirmar Envio'}
@@ -914,7 +762,7 @@
 
         listaAtividadesElemento.innerHTML = htmlAtividades;
     }
-    
+
   </script>
 </body>
 </html>
