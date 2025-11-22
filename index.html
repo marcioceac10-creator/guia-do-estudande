@@ -262,7 +262,7 @@
     <!-- TELA DE SELEÇÃO: Login do Aluno E ADMIN -->
     <section class="tela ativo" id="tela-selecao">
       <h1 style="font-size: 28px; display: flex; align-items: center; justify-content: center; gap: 10px;">
-        👋 Acesso ao Guia
+         Acesso ao Guia
       </h1>
       <p style="text-align: center; margin-bottom: 25px; color: var(--color-secundary);">
         Preencha seus dados para começar:
@@ -300,7 +300,7 @@
       
       <!-- NOVO: Toggle para Acesso Admin -->
       <button class="btn admin-btn" id="btn-toggle-admin" onclick="toggleAdminLoginFields(event)" style="margin-top: 15px; background: #333; color: white;">
-        ⚙️ Acesso Administrativo
+         Acesso Administrativo
       </button>
       
       <div id="admin-login-fields" style="display: none; margin-top: 20px; padding: 15px; border-radius: 12px; background: var(--color-background-darker);">
@@ -327,7 +327,7 @@
         <!-- Conteúdo dinâmico inserido por JavaScript -->
       </div>
       
-      <button class="btn" onclick="mudarTela('avisos')">📣 Mural de Avisos</button>
+      <button class="btn" onclick="mudarTela('avisos')"> Mural de Avisos</button>
       <button class="btn" onclick="mudarTela('calendario')">Calendário de Provas</button>
       <button class="btn" onclick="mudarTela('atividades')">Atividades para Entregar</button>
       <button class="btn" onclick="mudarTela('assuntos')">Assuntos</button>
@@ -341,11 +341,11 @@
       <h1>Painel do Administrador</h1>
       <p>Selecione o que deseja cadastrar:</p>
       <button class="btn" onclick="mudarTela('adicionar-prova')">➕ Cadastrar Prova</button>
-      <button class="btn admin-btn" onclick="mudarTela('adicionar-atividade')">📝 Cadastrar Atividade</button>
-      <button class="btn admin-btn" onclick="mudarTela('adicionar-aviso')" style="background: linear-gradient(90deg, #10b981, #059669);">📰 Cadastrar Aviso</button>
+      <button class="btn admin-btn" onclick="mudarTela('adicionar-atividade')"> Cadastrar Atividade</button>
+      <button class="btn admin-btn" onclick="mudarTela('adicionar-aviso')" style="background: linear-gradient(90deg, #10b981, #059669);"> Cadastrar Aviso</button>
       
       <!-- BOTÃO DE LIMPEZA: Cor original mantida (#e67e22) -->
-      <button class="btn voltar" onclick="limparItensAntigos()" style="background: #e67e22; border: none; margin-top: 20px;">🧹 Limpar Itens Antigos</button>
+      <button class="btn voltar" onclick="limparItensAntigos()" style="background: #e67e22; border: none; margin-top: 20px;"> Limpar Itens Antigos</button>
       
       <button class="btn voltar" onclick="mudarTela('inicial')" style="margin-top: 5px;">← Voltar ao Menu</button>
     </section>
@@ -437,7 +437,7 @@
 
     <!-- TELA DE RECURSOS DE ESTUDO: Conteúdo estático removido -->
     <section class="tela" id="tela-recursos">
-      <h1>📚 Recursos de Estudo</h1>
+      <h1> Recursos de Estudo</h1>
       <p style="margin-bottom: 20px;">Materiais de apoio e links importantes fornecidos pelos professores.</p>
       <ul id="lista-recursos">
         <!-- Recursos dinâmicos (mockados ou reais) serão inseridos aqui -->
@@ -551,7 +551,7 @@
             toggleBtn.style.background = '#444'; 
         } else {
             fields.style.display = 'none';
-            toggleBtn.textContent = '⚙️ Acesso Administrativo';
+            toggleBtn.textContent = ' Acesso Administrativo';
             toggleBtn.style.background = '#333';
         }
     }
@@ -564,13 +564,13 @@
             senhaInput.value = '';
             // Oculta os campos de login admin após o sucesso
             document.getElementById('admin-login-fields').style.display = 'none';
-            document.getElementById('btn-toggle-admin').textContent = '⚙️ Acesso Administrativo';
+            document.getElementById('btn-toggle-admin').textContent = ' Acesso Administrativo';
             document.getElementById('btn-toggle-admin').style.background = '#333';
             
-            mostrarMensagem('✅ Acesso Admin liberado com sucesso!', 'success');
+            mostrarMensagem(' Acesso Admin liberado com sucesso!', 'success');
             setTimeout(() => mudarTela('admin', false), 500);
         } else {
-            mostrarMensagem("❌ Senha incorreta. Acesso negado.", 'error');
+            mostrarMensagem(" Senha incorreta. Acesso negado.", 'error');
             senhaInput.value = '';
         }
     }
@@ -607,7 +607,7 @@
       
       // Validação: verifica se algum campo está vazio (o problema estava aqui, sem feedback visual)
       if (!nome || !curso || !ano || curso === '' || ano === '') {
-        mostrarMensagem('🚨 Por favor, preencha todos os campos (Nome, Curso e Ano).', 'error');
+        mostrarMensagem(' Por favor, preencha todos os campos (Nome, Curso e Ano).', 'error');
         return;
       }
       
@@ -617,7 +617,7 @@
 
       document.getElementById('info-aluno').textContent = `Bem-vindo(a), ${nome} (${ano} - ${curso})`;
       
-      mostrarMensagem('✅ Login efetuado com sucesso! Redirecionando...', 'success');
+      mostrarMensagem(' Login efetuado com sucesso! Redirecionando...', 'success');
       
       // Delay para o usuário ver a mensagem de sucesso
       setTimeout(() => {
@@ -694,26 +694,26 @@
       });
 
       const alertaElemento = document.getElementById('alertas-proximos');
-      let htmlAlerta = '<h2>🚨 Alertas de Organização</h2>';
+      let htmlAlerta = '<h2> Alertas de Organização</h2>';
       let temAlerta = false;
 
       if (provasProximas > 0) {
-        htmlAlerta += `<p>• 📅 ${provasProximas} Prova(s) marcada(s) para os próximos 3 dias. Estude!</p>`;
+        htmlAlerta += `<p>•  ${provasProximas} Prova(s) marcada(s) para os próximos 3 dias. Estude!</p>`;
         temAlerta = true;
       }
       if (atividadesProximas > 0) {
-        htmlAlerta += `<p>• 📝 ${atividadesProximas} Atividade(s) com entrega nos próximos 3 dias.</p>`;
+        htmlAlerta += `<p>•  ${atividadesProximas} Atividade(s) com entrega nos próximos 3 dias.</p>`;
         temAlerta = true;
       }
       if (atividadesPendentes > 0) {
-        htmlAlerta += `<p>• ⏳ Você tem ${atividadesPendentes} atividade(s) pendente(s) no total.</p>`;
+        htmlAlerta += `<p>•  Você tem ${atividadesPendentes} atividade(s) pendente(s) no total.</p>`;
       }
       
       if (!temAlerta && atividadesPendentes === 0) {
-        htmlAlerta = '<h2>✅ Tudo em Ordem!</h2><p>Nenhuma prova ou entrega urgente para os próximos dias.</p>';
+        htmlAlerta = '<h2> Tudo em Ordem!</h2><p>Nenhuma prova ou entrega urgente para os próximos dias.</p>';
         alertaElemento.style.borderColor = 'var(--color-success)';
       } else if (!temAlerta && atividadesPendentes > 0) {
-        htmlAlerta = `<h2>👍 Sem Urgência</h2><p>Você tem ${atividadesPendentes} atividade(s) pendente(s), mas sem prazo para os próximos 3 dias.</p>`;
+        htmlAlerta = `<h2> Sem Urgência</h2><p>Você tem ${atividadesPendentes} atividade(s) pendente(s), mas sem prazo para os próximos 3 dias.</p>`;
         alertaElemento.style.borderColor = 'var(--color-primary-dark)';
       } else {
         alertaElemento.style.borderColor = 'var(--color-alert)';
@@ -786,11 +786,11 @@
         console.log(mensagem);
         // Feedback visual simples
         const btn = document.querySelector('#tela-admin .btn[onclick="limparItensAntigos()"]');
-        btn.textContent = "🧹 Limpeza Concluída!";
-        mostrarMensagem('🧹 Limpeza Concluída!', 'success');
+        btn.textContent = " Limpeza Concluída!";
+        mostrarMensagem(' Limpeza Concluída!', 'success');
         
         setTimeout(() => {
-            btn.textContent = "🧹 Limpar Itens Antigos";
+            btn.textContent = " Limpar Itens Antigos";
         }, 3000);
 
         mudarTela('admin');
@@ -822,7 +822,7 @@
       };
 
       if (!novaProva.data || !novaProva.materia || !novaProva.assunto) {
-        mostrarMensagem('🚨 Por favor, preencha todos os campos da prova.', 'error');
+        mostrarMensagem(' Por favor, preencha todos os campos da prova.', 'error');
         return;
       }
 
@@ -831,7 +831,7 @@
       salvarProvas(provas);
 
       console.log(`Prova de ${novaProva.materia} em ${novaProva.data} adicionada com sucesso!`);
-      mostrarMensagem(`✅ Prova de ${novaProva.materia} salva!`, 'success');
+      mostrarMensagem(` Prova de ${novaProva.materia} salva!`, 'success');
 
       dataInput.value = '';
       materiaInput.value = '';
@@ -889,7 +889,7 @@
         };
 
         if (!novaAtividade.nome || !novaAtividade.materia || !novaAtividade.dataEntrega) {
-            mostrarMensagem('🚨 Por favor, preencha todos os campos da atividade.', 'error');
+            mostrarMensagem(' Por favor, preencha todos os campos da atividade.', 'error');
             return;
         }
 
@@ -898,7 +898,7 @@
         salvarAtividades(atividades);
 
         console.log(`Atividade "${novaAtividade.nome}" (${novaAtividade.materia}) cadastrada com sucesso! Data: ${novaAtividade.dataEntrega}`);
-        mostrarMensagem(`✅ Atividade "${novaAtividade.nome}" salva!`, 'success');
+        mostrarMensagem(` Atividade "${novaAtividade.nome}" salva!`, 'success');
 
         nomeInput.value = '';
         materiaInput.value = '';
@@ -930,7 +930,7 @@
       };
 
       if (!novoAviso.titulo || !novoAviso.texto) {
-        mostrarMensagem('🚨 Por favor, preencha o título e a mensagem do aviso.', 'error');
+        mostrarMensagem(' Por favor, preencha o título e a mensagem do aviso.', 'error');
         return;
       }
 
@@ -939,7 +939,7 @@
       salvarAvisos(avisos);
 
       console.log(`Aviso "${novoAviso.titulo}" publicado com sucesso!`);
-      mostrarMensagem(`✅ Aviso "${novoAviso.titulo}" publicado!`, 'success');
+      mostrarMensagem(` Aviso "${novoAviso.titulo}" publicado!`, 'success');
 
       tituloInput.value = '';
       textoInput.value = '';
@@ -1006,7 +1006,7 @@
         // Simulação de confirmação:
         salvarStatusEnvio(atividadeId, 'enviada');
         
-        mostrarMensagem('✅ Atividade marcada como ENVIADA!', 'success');
+        mostrarMensagem(' Atividade marcada como ENVIADA!', 'success');
         carregarAtividades();
         verificarAlertas(); // Atualiza os alertas
     }
